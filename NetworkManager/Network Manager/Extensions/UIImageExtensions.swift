@@ -1,6 +1,6 @@
 //
 //  UIImageExtensions.swift
-//  ChatTemplate
+//  NetworkManager
 //
 //  Created by Bibin Jacob Pulickal on 14/07/2018.
 //  Copyright © 2018 Bibin Jacob Pulickal. All rights reserved.

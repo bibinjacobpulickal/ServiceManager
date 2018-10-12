@@ -1,6 +1,6 @@
 //
 //  CodableExtensions.swift
-//  ChatTemplate
+//  NetworkManager
 //
 //  Created by Bibin Jacob Pulickal on 06/09/18.
 //  Copyright © 2018 Bibin Jacob Pulickal. All rights reserved.
