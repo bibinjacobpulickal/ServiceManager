@@ -18,6 +18,9 @@ extension Data {
     func decoded<T: Decodable>(using decoder: AnyDecoder = JSONDecoder()) throws -> T {
         return try decoder.decode(T.self, from: self)
     }
+    var json: Any? {
+        return try? JSONSerialization.jsonObject(with: self, options: .mutableLeaves)
+    }
 }
 
 protocol AnyEncoder {
@@ -35,5 +38,14 @@ extension Encodable {
     }
     var object: Any? {
         return try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))
+    }
+}
+
+extension KeyedDecodingContainerProtocol {
+    func decode<T: Decodable>(forKey key: Key) throws -> T {
+        return try decode(T.self, forKey: key)
+    }
+    func decode<T: Decodable>(forKey key: Key, default defaultExpression: @autoclosure () -> T) throws -> T {
+        return try decodeIfPresent(T.self, forKey: key) ?? defaultExpression()
     }
 }

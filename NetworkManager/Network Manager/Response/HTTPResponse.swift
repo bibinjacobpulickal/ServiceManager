@@ -33,7 +33,7 @@ enum Response<T: Codable> {
         case .serialized(let object):
             return try? JSONSerialization.data(withJSONObject: object, options: .prettyPrinted)
         case .decoded(let t):
-            return try? JSONEncoder().encode(t)
+            return try? t.encoded()
         default:
             return nil
         }
@@ -43,6 +43,8 @@ enum Response<T: Codable> {
         switch self {
         case .serialized(let json):
             return json
+        case .decoded(let t):
+            return t.object
         default:
             return nil
         }
