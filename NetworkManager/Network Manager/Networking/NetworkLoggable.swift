@@ -35,8 +35,8 @@ extension Network: NetworkLoggable {
         for item in items {
             if let item = item as? Data,
                 let object = try? JSONSerialization.jsonObject(with: item, options: .mutableLeaves),
-                let data = try? JSONSerialization.data(withJSONObject: object, options: .prettyPrinted),
-                let string = String(data: data, encoding: .utf8) {
+                let data = try? JSONSerialization.data(withJSONObject: object, options: .prettyPrinted) {
+                let string = String(decoding: data, as: UTF8.self)
                 print(string)
             } else {
                 print(item ?? "Item is empty")
