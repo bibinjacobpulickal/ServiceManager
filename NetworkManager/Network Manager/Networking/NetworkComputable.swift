@@ -34,9 +34,17 @@ extension Network: NetworkComputable {
         }
         if let data = api?.data {
             request.httpBody = data
-        } else if let object = api?.object {
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        } else if api?.encoding == .json, let object = api?.object {
             request.httpBody = try? JSONSerialization.data(withJSONObject: object, options: .sortedKeys)
+        } else if api?.encoding == .form, let object = api?.object as? [String: String] {
+            let boundary = generateBoundaryString()
+            request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? createBody(with: object, filePathKey: "file", paths: [], boundary: boundary)
+        }
+        if api?.encoding == .json {
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        } else if api?.encoding == .url {
+            request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         }
         return request
     }

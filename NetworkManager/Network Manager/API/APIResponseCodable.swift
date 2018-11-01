@@ -1,5 +1,5 @@
 //
-//  APIResponseDecodable.swift
+//  APIResponseCodable.swift
 //  NetworkManager
 //
 //  Created by Bibin Jacob Pulickal on 09/10/18.
@@ -8,7 +8,11 @@
 
 import Foundation
 
-extension API: ResponseDecodable {
+extension API: ResponseCodable {
+    
+    var encoding: Encoding? {
+        return nil
+    }
     
     var decoder: AnyDecoder {
         return JSONDecoder()

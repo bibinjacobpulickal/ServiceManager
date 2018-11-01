@@ -23,8 +23,9 @@
 		DB567FA321705E3000A9C251 /* APIURLRequestComputable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB567F9321705E3000A9C251 /* APIURLRequestComputable.swift */; };
 		DB567FA421705E3000A9C251 /* APIURLComputable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB567F9421705E3000A9C251 /* APIURLComputable.swift */; };
 		DB567FA521705E3000A9C251 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB567F9521705E3000A9C251 /* API.swift */; };
-		DB567FA621705E3000A9C251 /* APIResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB567F9621705E3000A9C251 /* APIResponseDecodable.swift */; };
+		DB567FA621705E3000A9C251 /* APIResponseCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB567F9621705E3000A9C251 /* APIResponseCodable.swift */; };
 		DB567FA721705E3000A9C251 /* APIProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB567F9721705E3000A9C251 /* APIProtocols.swift */; };
+		DBFA7D33218B62B5007F3C4B /* NetworkEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBFA7D32218B62B5007F3C4B /* NetworkEncoding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,8 +47,9 @@
 		DB567F9321705E3000A9C251 /* APIURLRequestComputable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIURLRequestComputable.swift; sourceTree = "<group>"; };
 		DB567F9421705E3000A9C251 /* APIURLComputable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIURLComputable.swift; sourceTree = "<group>"; };
 		DB567F9521705E3000A9C251 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
-		DB567F9621705E3000A9C251 /* APIResponseDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResponseDecodable.swift; sourceTree = "<group>"; };
+		DB567F9621705E3000A9C251 /* APIResponseCodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResponseCodable.swift; sourceTree = "<group>"; };
 		DB567F9721705E3000A9C251 /* APIProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIProtocols.swift; sourceTree = "<group>"; };
+		DBFA7D32218B62B5007F3C4B /* NetworkEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkEncoding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 				DB567F8B21705E3000A9C251 /* Network.swift */,
 				DB567F8C21705E3000A9C251 /* NetworkComputable.swift */,
 				DB567F8D21705E3000A9C251 /* NetworkEnvironments.swift */,
+				DBFA7D32218B62B5007F3C4B /* NetworkEncoding.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -161,7 +164,7 @@
 				DB567F9321705E3000A9C251 /* APIURLRequestComputable.swift */,
 				DB567F9421705E3000A9C251 /* APIURLComputable.swift */,
 				DB567F9521705E3000A9C251 /* API.swift */,
-				DB567F9621705E3000A9C251 /* APIResponseDecodable.swift */,
+				DB567F9621705E3000A9C251 /* APIResponseCodable.swift */,
 				DB567F9721705E3000A9C251 /* APIProtocols.swift */,
 			);
 			path = API;
@@ -237,8 +240,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB567FA421705E3000A9C251 /* APIURLComputable.swift in Sources */,
-				DB567FA621705E3000A9C251 /* APIResponseDecodable.swift in Sources */,
+				DB567FA621705E3000A9C251 /* APIResponseCodable.swift in Sources */,
 				DB567F9E21705E3000A9C251 /* NetworkComputable.swift in Sources */,
+				DBFA7D33218B62B5007F3C4B /* NetworkEncoding.swift in Sources */,
 				DB567F9C21705E3000A9C251 /* NetworkProtocols.swift in Sources */,
 				DB567FA021705E3000A9C251 /* CodableExtensions.swift in Sources */,
 				DB567FA521705E3000A9C251 /* API.swift in Sources */,

@@ -25,6 +25,7 @@ protocol URLRequestComputable {
     var object: Any? { get }
 }
 
-protocol ResponseDecodable {
+protocol ResponseCodable {
+    var encoding: Encoding? { get }
     var decoder: AnyDecoder { get }
 }
