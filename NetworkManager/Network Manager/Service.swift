@@ -23,7 +23,7 @@ class Service {
     }
     
     func json(_ api: Route, log: Bool = false, completion: @escaping (Any?) -> Void) {
-        task(api, log: log) { (data, _, _) in
+        data(api, log: log) { (data) in
             if let data = data {
                 completion(try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves))
             } else {
@@ -33,7 +33,7 @@ class Service {
     }
     
     func object<T: Decodable>(_ api: Route, log: Bool = false, completion: @escaping (T) -> Void) {
-        task(api, log: log) { (data, _, _) in
+        data(api, log: log) { (data) in
             if let data = data,
                 let object = try? data.decoded(using: api.decoder) as T {
                 completion(object)
