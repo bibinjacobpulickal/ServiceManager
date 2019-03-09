@@ -1,6 +1,6 @@
 //
 //  URLRequestExtension.swift
-//  Service Manager
+//  Network Manager
 //
 //  Created by Bibin Jacob Pulickal on 04/01/19.
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
