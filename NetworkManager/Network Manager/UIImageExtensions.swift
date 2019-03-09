@@ -1,6 +1,6 @@
 //
 //  UIImageExtensions.swift
-//  NetworkManager
+//  Service Manager
 //
 //  Created by Bibin Jacob Pulickal on 14/07/2018.
 //  Copyright © 2018 Bibin Jacob Pulickal. All rights reserved.
@@ -29,7 +29,7 @@ extension UIImageView {
         URLSession.shared.dataTask(with: url, completionHandler: { (data, _, error) in
             
             if let error = error {
-                Network.shared.logSession(URLRequest(url: url), data, nil, error)
+                print(error.localizedDescription, "URL:", urlString)
                 return
             }
             guard let imageData = data, let downloadedImage = UIImage(data: imageData) else { return }

@@ -1,9 +1,9 @@
 //
 //  CodableExtensions.swift
-//  NetworkManager
+//  Service Manager
 //
-//  Created by Bibin Jacob Pulickal on 06/09/18.
-//  Copyright © 2018 Bibin Jacob Pulickal. All rights reserved.
+//  Created by Bibin Jacob Pulickal on 03/01/19.
+//  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
 import Foundation
