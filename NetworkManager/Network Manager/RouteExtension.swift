@@ -8,24 +8,24 @@
 
 import Foundation
 
-typealias HTTPQuery = [String: String]?
-typealias HTTPHeader = [String: String]?
+typealias HTTPParameters = [String: Any]
+typealias HTTPHeader = [String: String]
 
 extension Route {
     
-    var queries: HTTPQuery {
+    var parameters: HTTPParameters? {
         return nil
     }
     
-    var method: HTTPMethod? {
-        return nil
+    var method: HTTPMethod {
+        return .get
     }
     
     var encoding: HTTPEncoding? {
         return nil
     }
     
-    var headers: HTTPHeader {
+    var headers: HTTPHeader? {
         return nil
     }
     
@@ -33,33 +33,31 @@ extension Route {
         return nil
     }
     
-    var json: Any? {
-        return nil
-    }
-    
     var object: Encodable? {
         return nil
     }
     
-    var urlComponents: URLComponents {
+    var components: URLComponents {
         var components = URLComponents()
         components.scheme = scheme
         components.host = host
         components.path = path
-        queries?.forEach({ (key, value) in
-            let query = URLQueryItem(name: key, value: value)
-            if components.queryItems?.append(query) == nil {
-                components.queryItems = [query]
-            }
-        })
+        if encoding == .url {
+            parameters?.forEach({ (key, value) in
+                let query = URLQueryItem(name: key, value: value as? String)
+                if components.queryItems?.append(query) == nil {
+                    components.queryItems = [query]
+                }
+            })
+        }
         return components
     }
     
     var httpBody: Data? {
         if let httpBody = data {
             return httpBody
-        } else if let json = json {
-            return try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
+        } else if encoding == .json, let parameters = parameters {
+            return try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
         } else if let object = object {
             return try? object.encoded(using: encoder)
         } else {
@@ -67,9 +65,9 @@ extension Route {
         }
     }
     
-    var urlRequest: URLRequest {
-        guard let url = urlComponents.url else {
-            fatalError("Error with url: \(urlComponents.url?.absoluteString ?? "")")
+    var request: URLRequest {
+        guard let url = components.url else {
+            fatalError("Error with url: \(components.url?.absoluteString ?? "")")
         }
         return URLRequest(url: url, httpBody: httpBody, method: method, encoding: encoding, headers: headers)
     }

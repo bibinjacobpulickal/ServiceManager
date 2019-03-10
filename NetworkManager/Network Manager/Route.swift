@@ -20,28 +20,25 @@ protocol Route {
     var path: String { get }
     
     // eg: ["key": "item"]
-    var queries: HTTPQuery { get }
+    var parameters: HTTPParameters? { get }
     
     // scheme, host, path and queries combined.
-    var urlComponents: URLComponents { get }
+    var components: URLComponents { get }
     
     // get or post etc.
-    var method: HTTPMethod? { get }
+    var method: HTTPMethod { get }
     
     // url or json encoding
     var encoding: HTTPEncoding? { get }
     
     // eg: ["Authorization": "Bearer..."]
-    var headers: HTTPHeader { get }
+    var headers: HTTPHeader? { get }
     
     // Computed url request
-    var urlRequest: URLRequest { get }
+    var request: URLRequest { get }
     
     // Data to be sent
     var data: Data? { get }
-    
-    // Json object to be sent
-    var json: Any? { get }
     
     // Encodable object to be sent
     var object: Encodable? { get }

@@ -52,7 +52,7 @@ class Service {
                     if log || networkError != nil {
                         self.logSession(true, request: nil, data: nil, response: nil, error: error)
                     } else {
-                        self.logSession(true, request: api.urlRequest, data: data, response: response, error: error)
+                        self.logSession(true, request: api.request, data: data, response: response, error: error)
                     }
                     completion(.failure(error))
                 }
@@ -61,9 +61,9 @@ class Service {
     }
     
     func task(_ api: Route, log: Bool = false, completion: @escaping (Data?, HTTPURLResponse? , Error?) -> Void) {
-        URLSession.shared.dataTask(with: api.urlRequest) { (data, resp, error) in
+        URLSession.shared.dataTask(with: api.request) { (data, resp, error) in
             let response = resp as? HTTPURLResponse
-            self.logSession(log, request: api.urlRequest, data: data, response: response, error: error)
+            self.logSession(log, request: api.request, data: data, response: response, error: error)
             DispatchQueue.main.async {
                 completion(data, response, error)
             }
