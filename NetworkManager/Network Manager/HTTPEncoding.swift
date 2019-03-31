@@ -12,15 +12,18 @@ enum HTTPEncoding {
     
     case url
     case json
+    case form
     
     static let contentTypeKey = "Content-Type"
     
-    var contentType: String {
+    var contentType: String? {
         switch self {
         case .url:
             return "application/x-www-form-urlencoded"
         case .json:
             return "application/json"
+        case .form:
+            return nil
         }
     }
 }

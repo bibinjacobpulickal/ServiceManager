@@ -8,6 +8,11 @@
 
 import Foundation
 
+func +=(lhs: inout Data, rhs: String) {
+    let data = rhs.data(using: .utf8)!
+    lhs.append(data)
+}
+
 protocol AnyDecoder {
     func decode<T: Decodable>(_ type: T.Type, from data: Data) throws -> T
 }
@@ -38,6 +43,12 @@ extension Encodable {
     }
     var object: Any? {
         return try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))
+    }
+    subscript(key: String) -> Any? {
+        return dictionary[key]
+    }
+    var dictionary: [String: Any] {
+        return object as? [String: Any] ?? [:]
     }
 }
 

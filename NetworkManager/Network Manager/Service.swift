@@ -107,6 +107,8 @@ private extension Service {
                     print("Error Key:", codingPath.stringValue)
                 }
                 print("Error:", context.debugDescription)
+            @unknown default:
+                print("Error:", error.localizedDescription)
             }
         } else {
             print("Error:", error.localizedDescription)

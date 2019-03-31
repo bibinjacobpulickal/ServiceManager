@@ -8,38 +8,12 @@
 
 import Foundation
 
-typealias HTTPParameters = [String: Any]
-typealias HTTPHeader = [String: String]
-
+// Computing properties
 extension Route {
-    
-    var parameters: HTTPParameters? {
-        return nil
-    }
-    
-    var method: HTTPMethod {
-        return .get
-    }
-    
-    var encoding: HTTPEncoding? {
-        return nil
-    }
-    
-    var headers: HTTPHeader? {
-        return nil
-    }
-    
-    var data: Data? {
-        return nil
-    }
-    
-    var object: Encodable? {
-        return nil
-    }
     
     var components: URLComponents {
         var components = URLComponents()
-        components.scheme = scheme
+        components.scheme = scheme.rawValue
         components.host = host
         components.path = path
         if encoding == .url {
@@ -54,29 +28,39 @@ extension Route {
     }
     
     var httpBody: Data? {
-        if let httpBody = data {
-            return httpBody
-        } else if encoding == .json, let parameters = parameters {
-            return try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-        } else if let object = object {
-            return try? object.encoded(using: encoder)
-        } else {
-            return nil
+        if encoding == .json {
+            if let parameters = parameters {
+                return try? JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+            } else if let object = object {
+                return try? object.encoded(using: encoder)
+            }
         }
+        return data
     }
     
     var request: URLRequest {
         guard let url = components.url else {
             fatalError("Error with url: \(components.url?.absoluteString ?? "")")
         }
+        if encoding == .form {
+            let dataGenerator   = FormDataGenerator()
+            var headers         = self.headers
+            var httpBody        = self.httpBody
+            
+            headers?.updateValue("multipart/form-data; boundary=\(dataGenerator.boundary)", forKey: HTTPEncoding.contentTypeKey)
+            httpBody = formDataFrom(dataGenerator)
+            
+            return URLRequest(url: url, httpBody: httpBody, method: method, encoding: encoding, headers: headers)
+        }
         return URLRequest(url: url, httpBody: httpBody, method: method, encoding: encoding, headers: headers)
     }
     
-    var encoder: AnyEncoder {
-        return JSONEncoder()
-    }
-    
-    var decoder: AnyDecoder {
-        return JSONDecoder()
+    private func formDataFrom(_ generator: FormDataGenerator) -> Data {
+        if let parameters = parameters {
+            return generator.generateBody(parameters: parameters, formDataFiles: formDataFiles)
+        } else if let parameters = object?.dictionary {
+            return generator.generateBody(parameters: parameters, formDataFiles: formDataFiles)
+        }
+        return Data()
     }
 }

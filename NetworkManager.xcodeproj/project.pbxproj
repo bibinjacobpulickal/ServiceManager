@@ -16,6 +16,9 @@
 		112ACCFF222FDC7E00680BBF /* URLRequestExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112ACCF5222FDC7D00680BBF /* URLRequestExtension.swift */; };
 		112ACD00222FDC7E00680BBF /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112ACCF6222FDC7D00680BBF /* HTTPMethod.swift */; };
 		112ACD01222FDC7E00680BBF /* RouteExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112ACCF7222FDC7D00680BBF /* RouteExtension.swift */; };
+		1133CD8F224EF37B0017A2D9 /* HTTPScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1133CD8E224EF37B0017A2D9 /* HTTPScheme.swift */; };
+		1139F2C822506ADC00588C88 /* FormDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1139F2C722506ADC00588C88 /* FormDataHelper.swift */; };
+		1139F2CA22506B5200588C88 /* RouteDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1139F2C922506B5200588C88 /* RouteDefaults.swift */; };
 		DB456028216BDB2E007543C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB456027216BDB2E007543C0 /* AppDelegate.swift */; };
 		DB456032216BDB32007543C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB456031216BDB32007543C0 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -30,6 +33,9 @@
 		112ACCF5222FDC7D00680BBF /* URLRequestExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequestExtension.swift; sourceTree = "<group>"; };
 		112ACCF6222FDC7D00680BBF /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		112ACCF7222FDC7D00680BBF /* RouteExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteExtension.swift; sourceTree = "<group>"; };
+		1133CD8E224EF37B0017A2D9 /* HTTPScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPScheme.swift; sourceTree = "<group>"; };
+		1139F2C722506ADC00588C88 /* FormDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormDataHelper.swift; sourceTree = "<group>"; };
+		1139F2C922506B5200588C88 /* RouteDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDefaults.swift; sourceTree = "<group>"; };
 		DB456024216BDB2E007543C0 /* NetworkManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetworkManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB456027216BDB2E007543C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DB456031216BDB32007543C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,8 +103,11 @@
 				112ACCF2222FDC7D00680BBF /* HTTPEncoding.swift */,
 				112ACCF6222FDC7D00680BBF /* HTTPMethod.swift */,
 				112ACCF3222FDC7D00680BBF /* HTTPResult.swift */,
+				1133CD8E224EF37B0017A2D9 /* HTTPScheme.swift */,
 				112ACCF1222FDC7D00680BBF /* Route.swift */,
+				1139F2C922506B5200588C88 /* RouteDefaults.swift */,
 				112ACCF7222FDC7D00680BBF /* RouteExtension.swift */,
+				1139F2C722506ADC00588C88 /* FormDataHelper.swift */,
 				112ACCEF222FDC7D00680BBF /* Service.swift */,
 				112ACCF4222FDC7D00680BBF /* UIImageExtensions.swift */,
 				112ACCF5222FDC7D00680BBF /* URLRequestExtension.swift */,
@@ -138,6 +147,7 @@
 				TargetAttributes = {
 					DB456023216BDB2E007543C0 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -177,9 +187,12 @@
 			files = (
 				112ACCFC222FDC7E00680BBF /* HTTPEncoding.swift in Sources */,
 				112ACCFE222FDC7E00680BBF /* UIImageExtensions.swift in Sources */,
+				1133CD8F224EF37B0017A2D9 /* HTTPScheme.swift in Sources */,
 				112ACCFD222FDC7E00680BBF /* HTTPResult.swift in Sources */,
 				112ACD01222FDC7E00680BBF /* RouteExtension.swift in Sources */,
+				1139F2C822506ADC00588C88 /* FormDataHelper.swift in Sources */,
 				112ACD00222FDC7E00680BBF /* HTTPMethod.swift in Sources */,
+				1139F2CA22506B5200588C88 /* RouteDefaults.swift in Sources */,
 				112ACCF9222FDC7E00680BBF /* Service.swift in Sources */,
 				112ACCFB222FDC7E00680BBF /* Route.swift in Sources */,
 				112ACCFF222FDC7E00680BBF /* URLRequestExtension.swift in Sources */,
@@ -320,7 +333,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bibinjacobpulickal.NetworkManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -338,7 +351,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.bibinjacobpulickal.NetworkManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

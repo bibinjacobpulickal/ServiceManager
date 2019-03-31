@@ -8,10 +8,13 @@
 
 import Foundation
 
+typealias HTTPParameters = [String: Any]
+typealias HTTPHeader = [String: String]
+
 protocol Route {
     
     // http, https etc.
-    var scheme: String { get }
+    var scheme: HTTPScheme { get }
     
     // eg: www.google.com
     var host: String { get }
@@ -29,7 +32,7 @@ protocol Route {
     var method: HTTPMethod { get }
     
     // url or json encoding
-    var encoding: HTTPEncoding? { get }
+    var encoding: HTTPEncoding { get }
     
     // eg: ["Authorization": "Bearer..."]
     var headers: HTTPHeader? { get }
@@ -45,6 +48,9 @@ protocol Route {
     
     // Computed request body
     var httpBody: Data? { get }
+    
+    // Files to be send as Form Data. Default is [].
+    var formDataFiles: [FormDataFile] { get }
     
     // Defaults to JSONEncoder()
     var encoder: AnyEncoder { get }
