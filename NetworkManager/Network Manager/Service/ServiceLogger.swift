@@ -1,5 +1,5 @@
 //
-//  ServiceLog.swift
+//  ServiceLogger.swift
 //  NetworkManager
 //
 //  Created by Parel Creative on 01/04/19.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-extension Service {
+struct ServiceLogger {
     
-    func logSession(_ log: Bool, request: URLRequest?, data: Data?, response: HTTPURLResponse?, error: Error?) {
+    static func logSession(_ log: Bool, request: URLRequest?, data: Data?, response: HTTPURLResponse?, error: Error?) {
         if !log && error == nil && (200..<300).contains(response?.statusCode ?? 0) { return }
         
         if let request = request {
@@ -36,7 +36,7 @@ extension Service {
         }
     }
     
-    private func logError(_ error: Error) {
+    private static func logError(_ error: Error) {
         if let error = error as? DecodingError {
             switch error {
             case .dataCorrupted(let context), .keyNotFound(_, let context), .valueNotFound(_, let context), .typeMismatch(_, let context):
@@ -52,7 +52,7 @@ extension Service {
         }
     }
     
-    private func printData(_ data: Data) {
+    private static func printData(_ data: Data) {
         if let object = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves),
             let data = try? JSONSerialization.data(withJSONObject: object, options: .prettyPrinted) {
             print(String(decoding: data, as: UTF8.self))

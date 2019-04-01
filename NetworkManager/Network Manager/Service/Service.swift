@@ -50,9 +50,9 @@ class Service {
                     completion(.success(try data.decoded(using: api.decoder)))
                 } catch {
                     if log || networkError != nil {
-                        self.logSession(true, request: nil, data: nil, response: nil, error: error)
+                        ServiceLogger.logSession(true, request: nil, data: nil, response: nil, error: error)
                     } else {
-                        self.logSession(true, request: api.request, data: data, response: response, error: error)
+                        ServiceLogger.logSession(true, request: api.request, data: data, response: response, error: error)
                     }
                     completion(.failure(error))
                 }
@@ -67,7 +67,7 @@ class Service {
         }
         URLSession.shared.dataTask(with: request) { (data, resp, error) in
             let response = resp as? HTTPURLResponse
-            self.logSession(log, request: api.request, data: data, response: response, error: error)
+            ServiceLogger.logSession(log, request: api.request, data: data, response: response, error: error)
             DispatchQueue.main.async {
                 completion(data, response, error)
             }
