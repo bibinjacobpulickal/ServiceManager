@@ -23,6 +23,9 @@ protocol Route {
     var path: String { get }
     
     // eg: ["key": "item"]
+    var queries: HTTPParameters? { get }
+    
+    // eg: ["key": "item"]
     var parameters: HTTPParameters? { get }
     
     // scheme, host, path and queries combined.

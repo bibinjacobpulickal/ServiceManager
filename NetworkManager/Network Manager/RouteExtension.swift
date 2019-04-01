@@ -16,13 +16,11 @@ extension Route {
         components.scheme = scheme.rawValue
         components.host = host
         components.path = path
-        if encoding == .url {
-            parameters?.forEach({ (key, value) in
-                let query = URLQueryItem(name: key, value: value as? String)
-                if components.queryItems?.append(query) == nil {
-                    components.queryItems = [query]
-                }
-            })
+        queries?.forEach { (key, value) in
+            let query = URLQueryItem(name: key, value: value as? String)
+            if components.queryItems?.append(query) == nil {
+                components.queryItems = [query]
+            }
         }
         return components
     }
