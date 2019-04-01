@@ -41,7 +41,7 @@ protocol Route {
     var headers: HTTPHeader? { get }
     
     // Computed url request
-    var request: URLRequest { get }
+    var request: URLRequest? { get }
     
     // Data to be sent
     var data: Data? { get }

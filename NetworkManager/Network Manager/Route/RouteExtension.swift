@@ -36,10 +36,8 @@ extension Route {
         return data
     }
     
-    var request: URLRequest {
-        guard let url = components.url else {
-            fatalError("Error with url: \(components.url?.absoluteString ?? "")")
-        }
+    var request: URLRequest? {
+        let url = components.url
         if encoding == .form {
             let dataGenerator   = FormDataGenerator()
             var headers         = self.headers
