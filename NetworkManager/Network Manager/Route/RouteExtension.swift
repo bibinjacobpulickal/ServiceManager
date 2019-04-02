@@ -53,9 +53,9 @@ extension Route {
     
     private func formDataFrom(_ generator: FormDataGenerator) -> Data {
         if let parameters = parameters {
-            return generator.generateBody(parameters: parameters, formDataFiles: formDataFiles)
+            return generator.generateBody(parameters: parameters, formDataFiles: files)
         } else if let parameters = object?.dictionary {
-            return generator.generateBody(parameters: parameters, formDataFiles: formDataFiles)
+            return generator.generateBody(parameters: parameters, formDataFiles: files)
         }
         return Data()
     }

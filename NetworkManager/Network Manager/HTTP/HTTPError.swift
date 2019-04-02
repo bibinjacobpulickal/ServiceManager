@@ -10,6 +10,11 @@ import Foundation
 
 enum HTTPError: Error {
     case invalidURL
-    case requestFailed
-    case decodingFailure
+    
+    var localizedDescription: String {
+        switch self {
+        case .invalidURL:
+            return "Unable to process your request."
+        }
+    }
 }

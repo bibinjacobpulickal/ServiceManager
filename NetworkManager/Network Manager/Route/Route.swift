@@ -53,7 +53,7 @@ protocol Route {
     var httpBody: Data? { get }
     
     // Files to be send as Form Data. Default is [].
-    var formDataFiles: [FormDataFile] { get }
+    var files: [FormDataFile] { get }
     
     // Defaults to JSONEncoder()
     var encoder: AnyEncoder { get }

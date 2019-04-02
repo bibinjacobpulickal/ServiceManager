@@ -39,7 +39,7 @@ extension Route {
         return nil
     }
     
-    var formDataFiles: [FormDataFile] {
+    var files: [FormDataFile] {
         return []
     }
     
