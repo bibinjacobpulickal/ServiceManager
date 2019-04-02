@@ -15,6 +15,10 @@ extension Route {
         return .https
     }
     
+    var queries: HTTPParameters? {
+        return nil
+    }
+    
     var parameters: HTTPParameters? {
         return nil
     }
