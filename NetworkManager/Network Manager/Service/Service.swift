@@ -12,31 +12,30 @@ class Service {
     
     static let shared = Service()
     
-    func data(_ api: Route, log: Bool = false, completion: @escaping (Data?) -> Void) {
-        task(api, log: log) { (data, _, _) in
-            if data != nil {
-                completion(data)
+    func data(_ api: Route, log: Bool = false, completion: @escaping (Data?, Error?) -> Void) {
+        task(api, log: log) { (data, _, error) in
+            completion(data, error ?? HTTPError.invalidResponse)
+        }
+    }
+    
+    func json(_ api: Route, log: Bool = false, completion: @escaping (Any?, Error?) -> Void) {
+        data(api, log: log) { (data, error) in
+            if let data = data,
+                let json = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves) {
+                completion(json, nil)
             } else {
-                completion(nil)
+                completion(nil, error)
             }
         }
     }
     
-    func json(_ api: Route, log: Bool = false, completion: @escaping (Any?) -> Void) {
-        data(api, log: log) { (data) in
-            if let data = data {
-                completion(try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves))
-            } else {
-                completion(nil)
-            }
-        }
-    }
-    
-    func object<T: Decodable>(_ api: Route, log: Bool = false, completion: @escaping (T) -> Void) {
-        data(api, log: log) { (data) in
+    func object<T: Decodable>(_ api: Route, log: Bool = false, completion: @escaping (T?, Error?) -> Void) {
+        data(api, log: log) { (data, error) in
             if let data = data,
                 let object = try? data.decoded(using: api.decoder) as T {
-                completion(object)
+                completion(object, nil)
+            } else {
+                completion(nil, error)
             }
         }
     }
@@ -62,7 +61,9 @@ class Service {
     
     func task(_ api: Route, log: Bool = false, completion: @escaping (Data?, HTTPURLResponse? , Error?) -> Void) {
         guard let request = api.request else {
-            completion(nil, nil, HTTPError.invalidURL)
+            DispatchQueue.main.async {
+                completion(nil, nil, HTTPError.invalidRequest)
+            }
             return
         }
         URLSession.shared.dataTask(with: request) { (data, resp, error) in
