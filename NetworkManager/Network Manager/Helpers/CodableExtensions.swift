@@ -23,8 +23,12 @@ extension Data {
     func decoded<T: Decodable>(using decoder: AnyDecoder = JSONDecoder()) throws -> T {
         return try decoder.decode(T.self, from: self)
     }
-    var json: Any? {
-        return try? JSONSerialization.jsonObject(with: self, options: .mutableLeaves)
+    var json: Any {
+        do {
+            return try JSONSerialization.jsonObject(with: self, options: .mutableLeaves)
+        } catch {
+            return NSObject()
+        }
     }
 }
 
@@ -38,11 +42,19 @@ extension Encodable {
     func encoded(using encoder: AnyEncoder = JSONEncoder()) throws -> Data {
         return try encoder.encode(self)
     }
-    var data: Data? {
-        return try? self.encoded()
+    var data: Data {
+        do {
+            return try encoded()
+        } catch {
+            return Data()
+        }
     }
-    var object: Any? {
-        return try? JSONSerialization.jsonObject(with: JSONEncoder().encode(self))
+    var object: Any {
+        do {
+            return try JSONSerialization.jsonObject(with: JSONEncoder().encode(self))
+        } catch {
+            return NSObject()
+        }
     }
     subscript(key: String) -> Any? {
         return dictionary[key]
