@@ -10,7 +10,7 @@ import Foundation
 
 extension URLRequest {
     
-    init?(url: URL?, httpBody: Data?, method: HTTPMethod, encoding: HTTPEncoding?, headers: HTTPHeader?) {
+    init?(url: URL?, httpBody: Data? = nil, method: HTTPMethod = .get, encoding: HTTPEncoding? = nil, headers: HTTPHeader? = nil) {
         guard let url = url else { return nil }
         self.init(url: url)
         self.httpBody = httpBody

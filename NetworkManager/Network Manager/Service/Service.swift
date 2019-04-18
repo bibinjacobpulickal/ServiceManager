@@ -62,13 +62,42 @@ class Service {
     func task(_ api: Route, log: Bool = false, completion: @escaping (Data?, HTTPURLResponse? , Error?) -> Void) {
         guard let request = api.request else {
             DispatchQueue.main.async {
+                ServiceLogger.logSession(true, request: nil, data: nil, response: nil, error: HTTPError.invalidRequest)
                 completion(nil, nil, HTTPError.invalidRequest)
             }
             return
         }
+        task(request, log: log, completion: completion)
+    }
+    
+    func task(
+        url: String,
+        method: HTTPMethod = .get,
+        headers: HTTPHeader = [:],
+        data: Data? = nil,
+        object: Encodable? = nil,
+        encoding: HTTPEncoding = .json,
+        completion: @escaping (Data?, HTTPURLResponse? , Error?) -> Void) {
+            guard let request = URLRequest(url: URL(string: url),
+                                     httpBody: data ?? object?.data,
+                                     method: method,
+                                     encoding: encoding,
+                                     headers: headers) else {
+            DispatchQueue.main.async {
+                ServiceLogger.logSession(true, request: nil, data: nil, response: nil, error: HTTPError.invalidRequest)
+                completion(nil, nil, HTTPError.invalidRequest)
+            }
+            return
+        }
+        task(request, log: true, completion: completion)
+    }
+    
+    func task(_ request: URLRequest,
+              log: Bool,
+              completion: @escaping (Data?, HTTPURLResponse? , Error?) -> Void) {
         URLSession.shared.dataTask(with: request) { (data, resp, error) in
             let response = resp as? HTTPURLResponse
-            ServiceLogger.logSession(log, request: api.request, data: data, response: response, error: error)
+            ServiceLogger.logSession(log, request: request, data: data, response: response, error: error)
             DispatchQueue.main.async {
                 completion(data, response, error)
             }
