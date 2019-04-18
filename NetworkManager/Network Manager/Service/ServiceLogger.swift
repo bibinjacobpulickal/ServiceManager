@@ -53,11 +53,6 @@ struct ServiceLogger {
     }
     
     private static func printData(_ data: Data) {
-        if let object = try? JSONSerialization.jsonObject(with: data, options: .mutableLeaves),
-            let data = try? JSONSerialization.data(withJSONObject: object, options: .prettyPrinted) {
-            print(String(decoding: data, as: UTF8.self))
-        } else {
-            print(String(decoding: data, as: UTF8.self))
-        }
+        print(data.json.data.string)
     }
 }
