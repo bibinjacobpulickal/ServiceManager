@@ -14,7 +14,7 @@ class Service {
     
     func data(_ api: Route, log: Bool = false, completion: @escaping (Data?, Error?) -> Void) {
         task(api, log: log) { (data, _, error) in
-            completion(data, error ?? HTTPError.invalidResponse)
+            completion(data, HTTPError.invalidResponse(description: error?.localizedDescription))
         }
     }
     
@@ -62,8 +62,8 @@ class Service {
     func task(_ api: Route, log: Bool = false, completion: @escaping (Data?, HTTPURLResponse? , Error?) -> Void) {
         guard let request = api.request else {
             DispatchQueue.main.async {
-                ServiceLogger.logSession(true, request: nil, data: nil, response: nil, error: HTTPError.invalidRequest)
-                completion(nil, nil, HTTPError.invalidRequest)
+                ServiceLogger.logSession(true, request: nil, data: nil, response: nil, error: HTTPError.invalidRequest(description: nil))
+                completion(nil, nil, HTTPError.invalidRequest(description: nil))
             }
             return
         }
@@ -84,8 +84,8 @@ class Service {
                                      encoding: encoding,
                                      headers: headers) else {
             DispatchQueue.main.async {
-                ServiceLogger.logSession(true, request: nil, data: nil, response: nil, error: HTTPError.invalidRequest)
-                completion(nil, nil, HTTPError.invalidRequest)
+                ServiceLogger.logSession(true, request: nil, data: nil, response: nil, error: HTTPError.invalidRequest(description: nil))
+                completion(nil, nil, HTTPError.invalidRequest(description: nil))
             }
             return
         }

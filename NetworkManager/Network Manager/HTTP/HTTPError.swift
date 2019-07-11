@@ -9,20 +9,20 @@
 import Foundation
 
 public enum HTTPError: Error {
-    case invalidRequest
-    case invalidResponse
+    case invalidRequest(description: String?)
+    case invalidResponse(description: String?)
 }
 
 extension HTTPError: LocalizedError {
     
     public var errorDescription: String? {
         switch self {
-        case .invalidRequest:
+        case .invalidRequest(let description):
             return NSLocalizedString("Unable to process your request.",
-                                     comment: "Invalid Url Request.")
-        case .invalidResponse:
+                                     comment: description ?? "Invalid Url Request.")
+        case .invalidResponse(let description):
             return NSLocalizedString("Unable to process response from server.",
-                                     comment: "Invalid Response from server.")
+                                     comment: description ?? "Invalid Response from server.")
         }
     }
 }
