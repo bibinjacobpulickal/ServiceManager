@@ -6,6 +6,12 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
+#if os(iOS) || os(watchOS) || os(tvOS)
+import MobileCoreServices
+#elseif os(macOS)
+import CoreServices
+#endif
+
 open class MultipartFormData {
 
     struct EncodingCharacters {
