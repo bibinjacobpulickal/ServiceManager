@@ -20,7 +20,7 @@ class ServiceController: NSViewController {
     }
 
     @objc private func sendGetRequest() {
-        Service.shared.result(API.test, headers: ["test": "123"]) { (result) in
+        Service.shared.result(API.test) { (result: Result<Test, Error>) in
             switch result {
             case .success(let object):
                 print(object)
@@ -31,13 +31,9 @@ class ServiceController: NSViewController {
     }
 }
 
-enum API: URLComponent {
+enum API: Route {
 
     case test
-
-    var scheme: HTTPScheme {
-        return .https
-    }
 
     var host: String {
         return "www.google.com"
@@ -48,5 +44,5 @@ enum API: URLComponent {
     }
 }
 
-struct TestObject: Decodable {
+struct Test: Codable {
 }
