@@ -110,7 +110,7 @@ public class Service {
                 if log == true || error != nil || httpUrlResponse?.statusCode != 200 {
                     self.logSession(request, httpUrlResponse, error, data)
                 }
-                completion?(data, httpUrlResponse, error)
+                DispatchQueue.main.async { completion?(data, httpUrlResponse, error) }
             }
             task.resume()
         } catch {
