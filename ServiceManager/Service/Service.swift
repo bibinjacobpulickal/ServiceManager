@@ -13,7 +13,7 @@ public class Service {
     public func result<Object: Decodable>(_ route: Route,
                                           log: Bool = false,
                                           _ completion: ((Result<Object, Error>) -> Void)? = nil) {
-        dataResult(route) { result in
+        dataResult(route, log: log) { result in
             switch result {
             case .success(let data):
                 do {
