@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
-extension Encodable {
+public extension Encodable {
 
     func encoded(using encoder: AnyEncoder = JSONEncoder()) throws -> Data {
         return try encoder.encode(self)

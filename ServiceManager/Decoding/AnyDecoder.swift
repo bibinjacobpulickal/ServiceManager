@@ -12,7 +12,7 @@ public protocol AnyDecoder {
 
 extension JSONDecoder: AnyDecoder { }
 
-extension Data {
+public extension Data {
     func decoded<T: Decodable>(using decoder: AnyDecoder = JSONDecoder()) throws -> T {
         return try decoder.decode(T.self, from: self)
     }
@@ -26,7 +26,7 @@ extension Data {
     }
 }
 
-extension KeyedDecodingContainerProtocol {
+public extension KeyedDecodingContainerProtocol {
     func decode<T: Decodable>(forKey key: Key) throws -> T {
         return try decode(T.self, forKey: key)
     }
