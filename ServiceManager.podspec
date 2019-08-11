@@ -4,7 +4,7 @@ spec.name         = "ServiceManager"
 spec.version      = "1.0.0"
 spec.summary      = "Lightweight, Enumerated and Protocol Oriented Networking Module written in swift 5.0."
 
-spec.description  =  "Lightweight, Enumerated and Protocol Oriented Networking Module written in swift 5.0."
+spec.description  = "Lightweight, Enumerated and Protocol Oriented Networking Module written in swift 5.0. ServiceManager helps reduce networking code in view controllers and presenters."
 
 spec.homepage     = "https://github.com/bibinjacobpulickal/ServiceManager"
 
