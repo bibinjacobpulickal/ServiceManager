@@ -6,8 +6,7 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
-public enum HTTPMethod: String {
-    case options = "OPTIONS"
+public enum HTTPMethod: String, CaseIterable {
     case get     = "GET"
     case head    = "HEAD"
     case post    = "POST"
@@ -16,4 +15,5 @@ public enum HTTPMethod: String {
     case delete  = "DELETE"
     case trace   = "TRACE"
     case connect = "CONNECT"
+    case options = "OPTIONS"
 }
