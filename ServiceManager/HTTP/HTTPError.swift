@@ -252,7 +252,7 @@ extension HTTPError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .invalidURL(let url):
-            return "URL is not valid: \(url)"
+            return "Invalid url: \(url)"
         case .parameterEncodingFailed(let reason):
             return reason.localizedDescription
         case .multipartEncodingFailed(let reason):
