@@ -46,6 +46,8 @@
 		EF707C1B230137CA00EB3D8A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF707C0C230137CA00EB3D8A /* Info.plist */; };
 		EF707C1C230137CA00EB3D8A /* NSLayoutConstraintAttributeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF707C0E230137CA00EB3D8A /* NSLayoutConstraintAttributeExtensions.swift */; };
 		EF707C1D230137CA00EB3D8A /* AutoLayoutableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF707C0F230137CA00EB3D8A /* AutoLayoutableExtensions.swift */; };
+		EF8703EC233A772B003C5513 /* JSONEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8703EB233A772B003C5513 /* JSONEncoding.swift */; };
+		EF8703EE233A7744003C5513 /* PropertyListEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8703ED233A7744003C5513 /* PropertyListEncoding.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,6 +96,8 @@
 		EF707C0C230137CA00EB3D8A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF707C0E230137CA00EB3D8A /* NSLayoutConstraintAttributeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraintAttributeExtensions.swift; sourceTree = "<group>"; };
 		EF707C0F230137CA00EB3D8A /* AutoLayoutableExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoLayoutableExtensions.swift; sourceTree = "<group>"; };
+		EF8703EB233A772B003C5513 /* JSONEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEncoding.swift; sourceTree = "<group>"; };
+		EF8703ED233A7744003C5513 /* PropertyListEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListEncoding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +164,8 @@
 				AD428B4B22D8948B00444C33 /* AnyEncoder.swift */,
 				EF2AB43522EC7D1400FCC58C /* HTTPEncoding.swift */,
 				EF2AB43722EC7D5100FCC58C /* URLEncoding.swift */,
+				EF8703EB233A772B003C5513 /* JSONEncoding.swift */,
+				EF8703ED233A7744003C5513 /* PropertyListEncoding.swift */,
 				EF2AB43922EC903F00FCC58C /* FormDataEncoding.swift */,
 				EF5D0C3322FC8E8F0003B757 /* EncodableExtensions.swift */,
 			);
@@ -423,12 +429,14 @@
 				EF5D0C2E22FB2CBD0003B757 /* RequestComponent.swift in Sources */,
 				AD428B5022DC5C7500444C33 /* HTTPHeader.swift in Sources */,
 				AD428B3C22D74E5300444C33 /* HTTPError.swift in Sources */,
+				EF8703EE233A7744003C5513 /* PropertyListEncoding.swift in Sources */,
 				AD428B4822D86F7700444C33 /* AnyDecoder.swift in Sources */,
 				EF2AB43A22EC903F00FCC58C /* FormDataEncoding.swift in Sources */,
 				AD4F4D2022CB8CF300EBE63B /* Service.swift in Sources */,
 				AD428B5522DDC05D00444C33 /* URLConvertible.swift in Sources */,
 				AD428B4222D8510500444C33 /* HTTPScheme.swift in Sources */,
 				EF5D0C3022FB30DD0003B757 /* Route.swift in Sources */,
+				EF8703EC233A772B003C5513 /* JSONEncoding.swift in Sources */,
 				AD428B4422D86AE300444C33 /* ResponseDecodable.swift in Sources */,
 				AD428B3F22D84AB300444C33 /* URLComponent.swift in Sources */,
 				AD428B4A22D8943300444C33 /* RequestEncodable.swift in Sources */,

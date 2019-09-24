@@ -30,7 +30,7 @@ class ServiceController: NSViewController {
             case .success(let data):
                 self?.serviceView.resultText = "Data:\n\(data.prettyPrittedString)"
             case .failure(let error):
-                self?.serviceView.resultText = "Error:\(error.localizedDescription)"
+                self?.serviceView.resultText = "Error: \(error.localizedDescription)"
             }
         }
     }
