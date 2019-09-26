@@ -12,6 +12,56 @@ import MobileCoreServices
 import CoreServices
 #endif
 
+public struct FormDataEncoding: HTTPEncoding {
+
+    public static var `default`: FormDataEncoding { return FormDataEncoding() }
+
+    var files = [FormDataFile]()
+
+    public static func files(_ files: [FormDataFile]) -> FormDataEncoding {
+        return FormDataEncoding(files: files)
+    }
+
+    public init(files: [FormDataFile] = []) {
+        self.files = files
+    }
+
+    public func encode(_ urlRequest: RequestConvertible, with parameters: Parameters?) throws -> URLRequest {
+        var urlRequest = try urlRequest.asRequest()
+
+        let formData = MultipartFormData()
+
+        if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
+            urlRequest.setValue(formData.contentType, forHTTPHeaderField: "Content-Type")
+        }
+
+        if !files.isEmpty {
+            for file in files {
+                formData.append(file.data, withName: file.name, fileName: file.fileName, mimeType: file.mimeType)
+            }
+        }
+
+        guard let parameters = parameters else {
+            urlRequest.httpBody = try formData.encode()
+            return urlRequest
+        }
+
+        for (key, value) in parameters {
+            formData.append(Data("\(value)".utf8), withName: key)
+        }
+
+        urlRequest.httpBody = try formData.encode()
+        return urlRequest
+    }
+}
+
+public struct FormDataFile {
+    var data: Data
+    var name: String
+    var fileName: String
+    var mimeType: String
+}
+
 open class MultipartFormData {
 
     struct EncodingCharacters {

@@ -13,46 +13,42 @@ public class Service {
     public func result<Object: Decodable>(_ route: Route,
                                           log: Bool = false,
                                           _ completion: ((Result<Object, Error>) -> Void)? = nil) {
-        dataResult(route, log: log) { result in
-            switch result {
-            case .success(let data):
-                do {
-                    let object = try route.decoder.decode(Object.self, from: data)
-                    completion?(.success(object))
-                } catch {
-                    completion?(.failure(error))
-                }
-            case .failure(let error):
-                completion?(.failure(error))
-            }
+        dataResult(route, log: log) { [weak self] result in
+            self?.decodeDataResult(result, using: route.decoder, completion)
         }
     }
 
     public func result<Object: Decodable>(_ url: URLConvertible,
-                                          method: HTTPMethod        = .get,
-                                          headers: HTTPHeaders?     = nil,
-                                          object: Encodable?        = nil,
-                                          encoder: AnyEncoder       = JSONEncoder(),
-                                          encoding: HTTPEncoding    = JSONEncoding.default,
-                                          decoder: AnyDecoder       = JSONDecoder(),
+                                          method: HTTPMethod     = .get,
+                                          headers: HTTPHeaders?  = nil,
+                                          object: Encodable?     = nil,
+                                          encoder: AnyEncoder    = JSONEncoder(),
+                                          encoding: HTTPEncoding = JSONEncoding.default,
+                                          decoder: AnyDecoder    = JSONDecoder(),
                                           _ completion: ((Result<Object, Error>) -> Void)? = nil) {
         dataResult(url,
                    method: method,
                    headers: headers,
                    object: object,
                    encoder: encoder,
-                   encoding: encoding) { result in
-                    switch result {
-                    case .success(let data):
-                        do {
-                            let object = try decoder.decode(Object.self, from: data)
-                            completion?(.success(object))
-                        } catch {
-                            completion?(.failure(error))
-                        }
-                    case .failure(let error):
-                        completion?(.failure(error))
-                    }
+                   encoding: encoding) { [weak self] result in
+                    self?.decodeDataResult(result, using: decoder, completion)
+        }
+    }
+
+    private func decodeDataResult<Object: Decodable>(_ result: Result<Data, Error>,
+                                                     using decoder: AnyDecoder = JSONDecoder(),
+                                                     _ completion: ((Result<Object, Error>) -> Void)? = nil) {
+        switch result {
+        case .success(let data):
+            do {
+                completion?(.success(try data.decoded(using: decoder)))
+            } catch {
+                logSession(log: true, request: nil, response: nil, error: error, data: data)
+                completion?(.failure(error))
+            }
+        case .failure(let error):
+            completion?(.failure(error))
         }
     }
 
@@ -73,22 +69,23 @@ public class Service {
                 }
             }
         } catch {
+            logSession(log: true, request: nil, response: nil, error: error, data: nil)
             completion?(.failure(error))
         }
     }
 
     public func dataResult(_ url: URLConvertible,
-                           method: HTTPMethod                              = .get,
-                           headers: HTTPHeaders?                           = nil,
-                           object: Encodable?                              = nil,
-                           encoder: AnyEncoder                             = JSONEncoder(),
-                           encoding: HTTPEncoding                          = JSONEncoding.default,
-                           _ completion: ((Result<Data, Error>) -> Void)?  = nil) {
+                           method: HTTPMethod     = .get,
+                           headers: HTTPHeaders?  = nil,
+                           object: Encodable?     = nil,
+                           encoder: AnyEncoder    = JSONEncoder(),
+                           encoding: HTTPEncoding = JSONEncoding.default,
+                           _ completion: ((Result<Data, Error>) -> Void)? = nil) {
         do {
             let parameters       = try object?.jsonObject(using: encoder) as? HTTPParameters
             let requestComponent = URLRequestConvertible(url: url, method: method, parameters: parameters, encoding: encoding, headers: headers)
             let request          = try requestComponent.asRequest()
-            dataTask(request) { (data, urlResponse, error) in
+            dataTask(request, log: true) { (data, urlResponse, error) in
                 if let error = error {
                     completion?(.failure(error))
                 } else if let data = data {
@@ -105,22 +102,23 @@ public class Service {
                          _ completion: ((Data?, HTTPURLResponse?, Error?) -> Void)? = nil) {
         do {
             let request = try request.asRequest()
-            let task    = URLSession.shared.dataTask(with: request) { (data, urlResponse, error) in
+            let task    = URLSession.shared.dataTask(with: request) { [weak self] (data, urlResponse, error) in
                 let httpUrlResponse = urlResponse as? HTTPURLResponse
-                if log == true || error != nil || httpUrlResponse?.statusCode != 200 {
-                    self.logSession(request, httpUrlResponse, error, data)
-                }
+                self?.logSession(log: log, request: request, response: httpUrlResponse, error: error, data: data)
                 DispatchQueue.main.async { completion?(data, httpUrlResponse, error) }
             }
             task.resume()
         } catch {
-            logSession(nil, nil, error, nil)
+            logSession(log: log, request: nil, response: nil, error: error, data: nil)
             completion?(nil, nil, error)
         }
     }
 
-    func logSession(_ request: URLRequest?, _ response: HTTPURLResponse?, _ error: Error?, _ data: Data?) {
+    func logSession(log: Bool, request: URLRequest?, response: HTTPURLResponse?, error: Error?, data: Data?) {
 
+        if log == false && error == nil && !(200..<300).contains(response?.statusCode ?? 0) {
+            return
+        }
         print("\(request?.httpMethod ?? "URL"):\t\(request?.url?.absoluteString ?? "Empty url string")")
 
         if let headers = request?.allHTTPHeaderFields, !headers.isEmpty {
