@@ -38,8 +38,8 @@ public struct PropertyListEncoding: HTTPEncoding {
                 options: options
             )
 
-            if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-                urlRequest.setValue("application/x-plist", forHTTPHeaderField: "Content-Type")
+            if urlRequest.value(for: .contentType) == nil {
+                urlRequest.setValue("application/x-plist", for: .contentType)
             }
 
             urlRequest.httpBody = data

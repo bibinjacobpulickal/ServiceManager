@@ -2,7 +2,7 @@
 //  URLEncoding.swift
 //  ServiceManager
 //
-//  Created by Frankenstein on 27/07/19.
+//  Created by Bibin Jacob Pulickal on 27/07/19.
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
@@ -74,8 +74,8 @@ public struct URLEncoding: HTTPEncoding {
                 urlRequest.url = urlComponents.url
             }
         } else {
-            if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-                urlRequest.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            if urlRequest.value(for: .contentType) == nil {
+                urlRequest.setValue("application/x-www-form-urlencoded; charset=utf-8", for: .contentType)
             }
 
             urlRequest.httpBody = query(parameters).data(using: .utf8, allowLossyConversion: false)

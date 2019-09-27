@@ -44,7 +44,6 @@ public class Service {
             do {
                 completion?(.success(try data.decoded(using: decoder)))
             } catch {
-                logSession(log: true, request: nil, response: nil, error: error, data: data)
                 completion?(.failure(error))
             }
         case .failure(let error):
@@ -119,7 +118,9 @@ public class Service {
         if log == false && error == nil && !(200..<300).contains(response?.statusCode ?? 0) {
             return
         }
-        print("\(request?.httpMethod ?? "URL"):\t\(request?.url?.absoluteString ?? "Empty url string")")
+        if request != nil {
+            print("\(request?.httpMethod ?? "URL"):\t\(request?.url?.absoluteString ?? "Empty url string")")
+        }
 
         if let headers = request?.allHTTPHeaderFields, !headers.isEmpty {
             print("Header:\t\(headers)")

@@ -26,8 +26,8 @@ public struct JSONEncoding: HTTPEncoding {
         do {
             let data = try JSONSerialization.data(withJSONObject: parameters, options: options)
 
-            if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-                urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            if urlRequest.value(for: .contentType) == nil {
+                urlRequest.setValue("application/json", for: .contentType)
             }
 
             urlRequest.httpBody = data
@@ -46,8 +46,8 @@ public struct JSONEncoding: HTTPEncoding {
         do {
             let data = try JSONSerialization.data(withJSONObject: jsonObject, options: options)
 
-            if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-                urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            if urlRequest.value(for: .contentType) == nil {
+                urlRequest.setValue("application/json", for: .contentType)
             }
 
             urlRequest.httpBody = data

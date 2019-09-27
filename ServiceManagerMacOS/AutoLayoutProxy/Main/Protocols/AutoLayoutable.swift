@@ -2,7 +2,7 @@
 //  AutoLayoutable.swift
 //  AutoLayoutProxy
 //
-//  Created by Frankenstein on 02/08/19.
+//  Created by Bibin Jacob Pulickal on 02/08/19.
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 

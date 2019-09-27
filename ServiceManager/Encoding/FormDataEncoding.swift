@@ -2,7 +2,7 @@
 //  FormDataEncoding.swift
 //  ServiceManager
 //
-//  Created by Frankenstein on 27/07/19.
+//  Created by Bibin Jacob Pulickal on 27/07/19.
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
@@ -31,8 +31,8 @@ public struct FormDataEncoding: HTTPEncoding {
 
         let formData = MultipartFormData()
 
-        if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-            urlRequest.setValue(formData.contentType, forHTTPHeaderField: "Content-Type")
+        if urlRequest.value(for: .contentType) == nil {
+            urlRequest.setValue(formData.contentType, for: .contentType)
         }
 
         if !files.isEmpty {
@@ -415,7 +415,7 @@ open class MultipartFormData {
         if let fileName = fileName { disposition += "; filename=\"\(fileName)\"" }
 
         var headers = ["Content-Disposition": disposition]
-        if let mimeType = mimeType { headers["Content-Type"] = mimeType }
+        if let mimeType = mimeType { headers[contentType] = mimeType }
 
         return headers
     }
