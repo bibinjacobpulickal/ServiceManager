@@ -74,8 +74,8 @@ public struct URLEncoding: HTTPEncoding {
                 urlRequest.url = urlComponents.url
             }
         } else {
-            if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-                urlRequest.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
+            if urlRequest.value(for: .contentType) == nil {
+                urlRequest.setValue("application/x-www-form-urlencoded; charset=utf-8", for: .contentType)
             }
 
             urlRequest.httpBody = query(parameters).data(using: .utf8, allowLossyConversion: false)
