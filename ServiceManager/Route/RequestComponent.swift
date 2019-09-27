@@ -9,7 +9,7 @@
 public protocol RequestComponent: RequestConvertible {
 
     var method: HTTPMethod { get }
-    
+
     var headers: HTTPHeaders? { get }
 
     var object: Encodable? { get }
