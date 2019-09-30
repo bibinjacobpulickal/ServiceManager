@@ -16,29 +16,23 @@ public struct FormDataEncoding: HTTPEncoding {
 
     public static var `default`: FormDataEncoding { return FormDataEncoding() }
 
-    var files = [FormDataFile]()
+    var data = MultipartFormData()
 
-    public static func files(_ files: [FormDataFile]) -> FormDataEncoding {
-        return FormDataEncoding(files: files)
+    public static func formData(_ data: MultipartFormData) -> FormDataEncoding {
+        return FormDataEncoding(data: data)
     }
 
-    public init(files: [FormDataFile] = []) {
-        self.files = files
+    public init(data: MultipartFormData = MultipartFormData()) {
+        self.data = data
     }
 
     public func encode(_ urlRequest: RequestConvertible, with parameters: Parameters?) throws -> URLRequest {
         var urlRequest = try urlRequest.asRequest()
 
-        let formData = MultipartFormData()
+        let formData = data
 
         if urlRequest.value(for: .contentType) == nil {
             urlRequest.setValue(formData.contentType, for: .contentType)
-        }
-
-        if !files.isEmpty {
-            for file in files {
-                formData.append(file.data, withName: file.name, fileName: file.fileName, mimeType: file.mimeType)
-            }
         }
 
         guard let parameters = parameters else {
@@ -53,13 +47,6 @@ public struct FormDataEncoding: HTTPEncoding {
         urlRequest.httpBody = try formData.encode()
         return urlRequest
     }
-}
-
-public struct FormDataFile {
-    var data: Data
-    var name: String
-    var fileName: String
-    var mimeType: String
 }
 
 open class MultipartFormData {
