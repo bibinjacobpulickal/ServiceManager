@@ -44,6 +44,18 @@ public class Service {
             do {
                 completion?(.success(try data.decoded(using: decoder)))
             } catch {
+                switch error {
+                case DecodingError.keyNotFound(_, let context),
+                     DecodingError.valueNotFound(_, let context),
+                     DecodingError.typeMismatch(_, let context):
+                    print("Decoding Error:-")
+                    context.codingPath.forEach { codingKey in
+                        print("\tKey:\t\t\"\(codingKey.stringValue)\"")
+                    }
+                    print("\tDescription:", context.debugDescription)
+                default:
+                    print(error.localizedDescription)
+                }
                 completion?(.failure(error))
             }
         case .failure(let error):
@@ -119,20 +131,19 @@ public class Service {
             return
         }
         if request != nil {
-            print("\(request?.httpMethod ?? "URL"):\t\(request?.url?.absoluteString ?? "Empty url string")")
+            print("\(request?.httpMethod ?? "URL"):\t\t\(request?.url?.absoluteString ?? "Empty url string")")
         }
-
         if let headers = request?.allHTTPHeaderFields, !headers.isEmpty {
             print("Header:\t\(headers)")
         }
         if let data = request?.httpBody, !data.isEmpty {
             print("Body:\tSize: \(data)\n\(data.prettyPrittedString)")
         }
-        if let error = error {
-            print("Error:\t\(error.localizedDescription)")
-        }
         if let data = data, !data.isEmpty {
             print("Response:\tSize: \(data)\n\(data.prettyPrittedString)")
+        }
+        if let error = error {
+            print("Error:\t\(error.localizedDescription)")
         }
     }
 
