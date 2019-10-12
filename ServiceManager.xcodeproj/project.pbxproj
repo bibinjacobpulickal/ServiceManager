@@ -12,9 +12,7 @@
 		AD428B3C22D74E5300444C33 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD428B3B22D74E5300444C33 /* HTTPError.swift */; };
 		AD428B3F22D84AB300444C33 /* URLComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD428B3E22D84AB300444C33 /* URLComponent.swift */; };
 		AD428B4222D8510500444C33 /* HTTPScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD428B4122D8510500444C33 /* HTTPScheme.swift */; };
-		AD428B4422D86AE300444C33 /* ResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD428B4322D86AE300444C33 /* ResponseDecodable.swift */; };
 		AD428B4822D86F7700444C33 /* AnyDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD428B4722D86F7700444C33 /* AnyDecoder.swift */; };
-		AD428B4A22D8943300444C33 /* RequestEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD428B4922D8943300444C33 /* RequestEncodable.swift */; };
 		AD428B4C22D8948B00444C33 /* AnyEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD428B4B22D8948B00444C33 /* AnyEncoder.swift */; };
 		AD428B4E22D8959500444C33 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD428B4D22D8959500444C33 /* HTTPMethod.swift */; };
 		AD428B5022DC5C7500444C33 /* HTTPHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD428B4F22DC5C7500444C33 /* HTTPHeader.swift */; };
@@ -56,9 +54,7 @@
 		AD428B3B22D74E5300444C33 /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
 		AD428B3E22D84AB300444C33 /* URLComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLComponent.swift; sourceTree = "<group>"; };
 		AD428B4122D8510500444C33 /* HTTPScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPScheme.swift; sourceTree = "<group>"; };
-		AD428B4322D86AE300444C33 /* ResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseDecodable.swift; sourceTree = "<group>"; };
 		AD428B4722D86F7700444C33 /* AnyDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyDecoder.swift; sourceTree = "<group>"; };
-		AD428B4922D8943300444C33 /* RequestEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestEncodable.swift; sourceTree = "<group>"; };
 		AD428B4B22D8948B00444C33 /* AnyEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyEncoder.swift; sourceTree = "<group>"; };
 		AD428B4D22D8959500444C33 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		AD428B4F22DC5C7500444C33 /* HTTPHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeader.swift; sourceTree = "<group>"; };
@@ -151,7 +147,6 @@
 		AD428B4522D86F3B00444C33 /* Decoding */ = {
 			isa = PBXGroup;
 			children = (
-				AD428B4322D86AE300444C33 /* ResponseDecodable.swift */,
 				AD428B4722D86F7700444C33 /* AnyDecoder.swift */,
 			);
 			path = Decoding;
@@ -160,14 +155,13 @@
 		AD428B4622D86F4500444C33 /* Encoding */ = {
 			isa = PBXGroup;
 			children = (
-				AD428B4922D8943300444C33 /* RequestEncodable.swift */,
-				AD428B4B22D8948B00444C33 /* AnyEncoder.swift */,
 				EF2AB43522EC7D1400FCC58C /* HTTPEncoding.swift */,
 				EF2AB43722EC7D5100FCC58C /* URLEncoding.swift */,
 				EF8703EB233A772B003C5513 /* JSONEncoding.swift */,
 				EF8703ED233A7744003C5513 /* PropertyListEncoding.swift */,
 				EF2AB43922EC903F00FCC58C /* FormDataEncoding.swift */,
 				EF5D0C3322FC8E8F0003B757 /* EncodableExtensions.swift */,
+				AD428B4B22D8948B00444C33 /* AnyEncoder.swift */,
 			);
 			path = Encoding;
 			sourceTree = "<group>";
@@ -437,9 +431,7 @@
 				AD428B4222D8510500444C33 /* HTTPScheme.swift in Sources */,
 				EF5D0C3022FB30DD0003B757 /* Route.swift in Sources */,
 				EF8703EC233A772B003C5513 /* JSONEncoding.swift in Sources */,
-				AD428B4422D86AE300444C33 /* ResponseDecodable.swift in Sources */,
 				AD428B3F22D84AB300444C33 /* URLComponent.swift in Sources */,
-				AD428B4A22D8943300444C33 /* RequestEncodable.swift in Sources */,
 				EF2AB43822EC7D5100FCC58C /* URLEncoding.swift in Sources */,
 				AD20224522D71FAD00A69799 /* RequestConvertible.swift in Sources */,
 				AD428B4C22D8948B00444C33 /* AnyEncoder.swift in Sources */,
