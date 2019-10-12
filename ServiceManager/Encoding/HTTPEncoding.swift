@@ -6,9 +6,9 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
-public typealias Parameters = [String: Any]
+public typealias HTTPParameters = [String: Any]
 
 public protocol HTTPEncoding {
 
-    func encode(_ urlRequest: RequestConvertible, with parameters: Parameters?) throws -> URLRequest
+    func encode(_ urlRequest: RequestConvertible, with parameters: HTTPParameters?) throws -> URLRequest
 }

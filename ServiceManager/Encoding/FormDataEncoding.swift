@@ -26,7 +26,7 @@ public struct FormDataEncoding: HTTPEncoding {
         self.data = data
     }
 
-    public func encode(_ urlRequest: RequestConvertible, with parameters: Parameters?) throws -> URLRequest {
+    public func encode(_ urlRequest: RequestConvertible, with parameters: HTTPParameters?) throws -> URLRequest {
         var urlRequest = try urlRequest.asRequest()
 
         let formData = data

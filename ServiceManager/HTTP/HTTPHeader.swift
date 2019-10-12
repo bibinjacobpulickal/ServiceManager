@@ -6,9 +6,7 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
-public typealias HTTPParameters = [String: Any]
 public typealias HTTPHeaders = [String: String]
-public typealias HTTPQueries = [String: String?]
 
 public extension URLRequest {
 

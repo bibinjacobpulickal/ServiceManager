@@ -18,7 +18,7 @@ public protocol URLComponent: URLConvertible {
     var path: String { get }
 
     // eg: ["key": "item"]
-    var queries: HTTPQueries? { get }
+    var queries: HTTPParameters? { get }
 }
 
 public extension URLComponent {
@@ -27,7 +27,7 @@ public extension URLComponent {
         return .https
     }
 
-    var queries: HTTPQueries? {
+    var queries: HTTPParameters? {
         return nil
     }
 }
@@ -40,14 +40,11 @@ public extension URLComponent {
         components.host = host
         components.path = path
         queries?.forEach { (key, value) in
-            let query = URLQueryItem(name: key, value: value)
+            let query = URLQueryItem(name: key, value: "\(value)")
             if components.queryItems?.append(query) == nil {
                 components.queryItems = [query]
             }
         }
-        guard let url = components.url else {
-            throw HTTPError.invalidURL(url: components)
-        }
-        return url
+        return try components.asURL()
     }
 }

@@ -10,6 +10,7 @@ public enum HTTPError: Error {
 
     public enum ParameterEncodingFailureReason {
         case missingURL
+        case optionalDictionaryCastingFailed
         case jsonEncodingFailed(error: Error)
         case propertyListEncodingFailed(error: Error)
     }
@@ -270,6 +271,8 @@ extension HTTPError.ParameterEncodingFailureReason {
         switch self {
         case .missingURL:
             return "URL request to encode was missing a URL"
+        case .optionalDictionaryCastingFailed:
+            return "Casting to [String: Any] type failed"
         case .jsonEncodingFailed(let error):
             return "JSON could not be encoded because of error:\n\(error.localizedDescription)"
         case .propertyListEncodingFailed(let error):
