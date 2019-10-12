@@ -63,7 +63,7 @@ public struct URLEncoding: HTTPEncoding {
 
         guard let parameters = parameters else { return urlRequest }
 
-        if let method = HTTPMethod(rawValue: urlRequest.httpMethod ?? "GET"), encodesParametersInURL(with: method) {
+        if let method = HTTPMethod(value: urlRequest.httpMethod ?? "GET"), encodesParametersInURL(with: method) {
             guard let url = urlRequest.url else {
                 throw HTTPError.parameterEncodingFailed(reason: .missingURL)
             }

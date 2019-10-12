@@ -156,7 +156,7 @@ extension URLRequest {
         let url = try url.asURL()
         self.init(url: url)
 
-        httpMethod = method.rawValue
+        httpMethod = method.value
         if let headers = headers {
             for (headerField, headerValue) in headers {
                 setValue(headerValue, forHTTPHeaderField: headerField)

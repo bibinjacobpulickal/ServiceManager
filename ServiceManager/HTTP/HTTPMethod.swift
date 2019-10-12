@@ -7,13 +7,21 @@
 //
 
 public enum HTTPMethod: String, CaseIterable {
-    case get     = "GET"
-    case head    = "HEAD"
-    case post    = "POST"
-    case put     = "PUT"
-    case patch   = "PATCH"
-    case delete  = "DELETE"
-    case trace   = "TRACE"
-    case connect = "CONNECT"
-    case options = "OPTIONS"
+    case get
+    case head
+    case post
+    case put
+    case patch
+    case delete
+    case trace
+    case connect
+    case options
+
+    public init?(value: String) {
+        self.init(rawValue: value.lowercased())
+    }
+
+    public var value: String {
+        return self.rawValue.uppercased()
+    }
 }
