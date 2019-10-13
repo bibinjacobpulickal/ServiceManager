@@ -23,7 +23,7 @@ public class Service {
                                           headers: HTTPHeaders?  = nil,
                                           object: Encodable?     = nil,
                                           encoder: AnyEncoder    = JSONEncoder(),
-                                          encoding: HTTPEncoding = JSONEncoding.default,
+                                          encoding: HTTPEncoding = URLEncoding.default,
                                           decoder: AnyDecoder    = JSONDecoder(),
                                           _ completion: ((Result<Object, Error>) -> Void)? = nil) {
         dataResult(url,
@@ -90,7 +90,7 @@ public class Service {
                            headers: HTTPHeaders?  = nil,
                            object: Encodable?     = nil,
                            encoder: AnyEncoder    = JSONEncoder(),
-                           encoding: HTTPEncoding = JSONEncoding.default,
+                           encoding: HTTPEncoding = URLEncoding.default,
                            _ completion: ((Result<Data, Error>) -> Void)? = nil) {
         do {
             let parameters       = try object?.jsonObject(using: encoder) as? HTTPParameters

@@ -8,7 +8,7 @@
 
 public protocol URLComponent: URLConvertible {
 
-    // http, https etc.
+    // http, https etc, defaults to https.
     var scheme: HTTPScheme { get }
 
     // eg: www.google.com
@@ -17,7 +17,7 @@ public protocol URLComponent: URLConvertible {
     // eg: /search
     var path: String { get }
 
-    // eg: ["key": "item"]
+    // eg: ["key": "item"], defaults to nil.
     var queries: HTTPParameters? { get }
 }
 

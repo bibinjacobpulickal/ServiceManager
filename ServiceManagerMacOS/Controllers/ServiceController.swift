@@ -18,13 +18,13 @@ class ServiceController: NSViewController {
     }
 
     @objc private func sendRequest() {
-        let urlString           = serviceView.urlString
+        let urlString           = "https://reqres.in/api/users?page=2"
         let method              = serviceView.method
 
         serviceView.resultText  = ""
         serviceView.activityIndicator.startAnimation(self)
 
-        Service.shared.dataResult(urlString, method: method) { [weak self] result in
+        Service.shared.dataResult(urlString, method: method, object: Test()) { [weak self] result in
             self?.serviceView.activityIndicator.stopAnimation(nil)
             switch result {
             case .success(let data):
@@ -34,4 +34,9 @@ class ServiceController: NSViewController {
             }
         }
     }
+}
+
+struct Test: Encodable {
+    var test1: Int?
+    var test2 = "test"
 }
