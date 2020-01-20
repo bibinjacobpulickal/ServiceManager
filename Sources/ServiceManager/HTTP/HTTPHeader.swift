@@ -6,7 +6,7 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
-public typealias HTTPHeaders = [String: String]
+public typealias HTTPHeaders = [HTTPHeaderField: String]
 
 public extension URLRequest {
 
@@ -19,7 +19,7 @@ public extension URLRequest {
     }
 }
 
-public extension URLRequest {
+//public extension URLRequest {
 
     enum HTTPHeaderField: String {
         case AIM                         = "A-IM"
@@ -62,4 +62,4 @@ public extension URLRequest {
         case via                         = "Via"
         case warning                     = "Warning"
     }
-}
+//}
