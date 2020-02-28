@@ -6,6 +6,8 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
+import Foundation
+
 public extension Encodable {
 
     func encoded(using encoder: AnyEncoder = JSONEncoder()) throws -> Data {

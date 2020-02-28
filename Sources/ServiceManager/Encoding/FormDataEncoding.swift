@@ -6,6 +6,8 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
+import Foundation
+
 #if os(iOS) || os(watchOS) || os(tvOS)
 import MobileCoreServices
 #elseif os(macOS)

@@ -6,6 +6,8 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
+import Foundation
+
 public protocol URLConvertible: RequestConvertible {
     func asURL() throws -> URL
 }

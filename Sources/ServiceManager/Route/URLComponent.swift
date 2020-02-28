@@ -6,6 +6,8 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
+import Foundation
+
 public protocol URLComponent: URLConvertible {
 
     // http, https etc, defaults to https.

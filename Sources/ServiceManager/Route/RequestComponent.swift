@@ -6,6 +6,8 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
+import Foundation
+
 public protocol RequestComponent: RequestConvertible {
 
     // URLRequest method eg: GET, POST etc, defaults to get.

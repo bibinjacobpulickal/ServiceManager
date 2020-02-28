@@ -6,6 +6,8 @@
 //  Copyright © 2019 Bibin Jacob Pulickal. All rights reserved.
 //
 
+import Foundation
+
 #import <Foundation/Foundation.h>
 
 //! Project version number for ServiceManager.
