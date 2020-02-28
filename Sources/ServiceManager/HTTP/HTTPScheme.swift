@@ -8,6 +8,6 @@
 
 import Foundation
 
-public enum HTTPScheme: String {
+public enum HTTPScheme: String, CaseIterable {
     case http, https, ftp
 }
