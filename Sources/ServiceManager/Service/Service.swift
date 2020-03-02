@@ -22,6 +22,7 @@ public class Service {
 
     public func result<Object: Decodable>(_ url: URLConvertible,
                                           method: HTTPMethod     = .get,
+                                          body: Data?            = nil,
                                           headers: HTTPHeaders?  = nil,
                                           object: Encodable?     = nil,
                                           encoder: AnyEncoder    = JSONEncoder(),
@@ -30,6 +31,7 @@ public class Service {
                                           _ completion: ((Result<Object, Error>) -> Void)? = nil) {
         dataResult(url,
                    method: method,
+                   body: body,
                    headers: headers,
                    object: object,
                    encoder: encoder,
@@ -71,7 +73,7 @@ public class Service {
         do {
             let url              = try route.asURL()
             let parameters       = try route.object?.jsonObject(using: route.encoder) as? HTTPParameters
-            let requestComponent = URLRequestConvertible(url: url, method: route.method, parameters: parameters,
+            let requestComponent = URLRequestConvertible(url: url, method: route.method, body: route.body, parameters: parameters,
                                                          encoding: route.encoding, headers: route.headers)
             let request          = try requestComponent.asRequest()
             dataTask(request, log: log) { (data, urlResponse, error) in
@@ -89,6 +91,7 @@ public class Service {
 
     public func dataResult(_ url: URLConvertible,
                            method: HTTPMethod     = .get,
+                           body: Data?            = nil,
                            headers: HTTPHeaders?  = nil,
                            object: Encodable?     = nil,
                            encoder: AnyEncoder    = JSONEncoder(),
@@ -96,7 +99,7 @@ public class Service {
                            _ completion: ((Result<Data, Error>) -> Void)? = nil) {
         do {
             let parameters       = try object?.jsonObject(using: encoder) as? HTTPParameters
-            let requestComponent = URLRequestConvertible(url: url, method: method, parameters: parameters, encoding: encoding, headers: headers)
+            let requestComponent = URLRequestConvertible(url: url, method: method, body: body, parameters: parameters, encoding: encoding, headers: headers)
             let request          = try requestComponent.asRequest()
             dataTask(request, log: true) { (data, urlResponse, error) in
                 if let error = error {
@@ -152,12 +155,13 @@ public class Service {
     struct URLRequestConvertible: RequestConvertible {
         let url: URLConvertible
         let method: HTTPMethod
+        let body: Data?
         let parameters: HTTPParameters?
         let encoding: HTTPEncoding
         let headers: HTTPHeaders?
 
         func asRequest() throws -> URLRequest {
-            let request = try URLRequest(url: url, method: method, headers: headers)
+            let request = try URLRequest(url: url, method: method, body: body, headers: headers)
             return try encoding.encode(request, with: parameters)
         }
     }
@@ -165,11 +169,12 @@ public class Service {
 
 extension URLRequest {
 
-    public init(url: URLConvertible, method: HTTPMethod, headers: HTTPHeaders? = nil) throws {
+    public init(url: URLConvertible, method: HTTPMethod, body: Data? = nil, headers: HTTPHeaders? = nil) throws {
         let url = try url.asURL()
         self.init(url: url)
 
         httpMethod = method.value
+        httpBody   = body
         if let headers = headers {
             for (headerField, headerValue) in headers {
                 setValue(headerValue, forHTTPHeaderField: headerField)
