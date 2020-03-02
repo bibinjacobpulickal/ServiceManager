@@ -176,7 +176,7 @@ extension URLRequest {
         self.init(url: url)
 
         httpMethod = method.value
-        httpBody   = body?.data
+        httpBody   = try body?.asData()
         if let headers = headers {
             for (headerField, headerValue) in headers {
                 setValue(headerValue, forHTTPHeaderField: headerField)

@@ -9,35 +9,29 @@
 import Foundation
 
 public protocol DataConvertible {
-
-    var data: Data { get }
+    func asData() throws -> Data
 }
 
 extension Data: DataConvertible {
-
-    public var data: Data { self }
+    public func asData() -> Data { self }
 }
 
 extension String: DataConvertible {
-
-    public var data: Data { Data(self.utf8) }
+    public func asData() -> Data { Data(self.utf8) }
 }
 
 extension Dictionary: DataConvertible where Key: Any, Value: Any {
-
-    public var data: Data {
-        (try? JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)) ?? Data()
+    public func asData() throws -> Data {
+        try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
     }
 }
 
 extension Array: DataConvertible where Element: Any {
-
-    public var data: Data {
-        (try? JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)) ?? Data()
+    public func asData() throws -> Data {
+        try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
     }
 }
 
 extension Encodable where Self: DataConvertible {
-
-    public var data: Data { (try? encoded()) ?? Data() }
+    public func asData() throws -> Data { try encoded() }
 }
