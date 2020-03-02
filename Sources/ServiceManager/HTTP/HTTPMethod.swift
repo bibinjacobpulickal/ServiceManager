@@ -23,7 +23,5 @@ public enum HTTPMethod: String, CaseIterable {
         self.init(rawValue: value.lowercased())
     }
 
-    public var value: String {
-        return self.rawValue.uppercased()
-    }
+    public var value: String { rawValue.uppercased() }
 }

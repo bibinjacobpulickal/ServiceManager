@@ -13,5 +13,5 @@ public protocol RequestConvertible {
 }
 
 extension URLRequest: RequestConvertible {
-    public func asRequest() throws -> URLRequest { return self }
+    public func asRequest() throws -> URLRequest { self }
 }

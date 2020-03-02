@@ -10,54 +10,36 @@ import Foundation
 
 public protocol RequestComponent: RequestConvertible {
 
-    // URLRequest method eg: GET, POST etc, defaults to get.
+    // URLRequest method eg: GET, POST etc. Defaults to get.
     var method: HTTPMethod { get }
 
-    // URLRequest headers eg: ["Authorization": "Bearer..."], defaults to nil.
+    // URLRequest httpBody of type data. Defaults to nil.
+    var body: Data? { get }
+
+    // URLRequest headers eg: ["Authorization": "Bearer..."]. Defaults to nil.
     var headers: HTTPHeaders? { get }
 
-    // URLRequest object, defaults to nil
+    // URLRequest object. Defaults to nil
     var object: Encodable? { get }
 
-    // URLRequest object encoder, defaults to JSONEncoder().
+    // URLRequest object encoder. Defaults to JSONEncoder().
     var encoder: AnyEncoder { get }
 
-    // URLRequest object encoding, defaults to URLEncoding.default.
+    // URLRequest object encoding. Defaults to URLEncoding.default.
     var encoding: HTTPEncoding { get }
 }
 
 public extension RequestComponent {
 
-    var method: HTTPMethod {
-        return .get
-    }
+    var method: HTTPMethod { .get }
 
-    var headers: HTTPHeaders? {
-        return nil
-    }
+    var body: Data? { nil }
 
-    var object: Encodable? {
-        return nil
-    }
+    var headers: HTTPHeaders? { nil }
 
-    var encoder: AnyEncoder {
-        return JSONEncoder()
-    }
+    var object: Encodable? { nil }
 
-    var encoding: HTTPEncoding {
-        return URLEncoding.default
-    }
-}
+    var encoder: AnyEncoder { JSONEncoder() }
 
-public protocol ResponseComponent {
-
-    // URLSession response object decoder, defaults to JSONDecoder().
-    var decoder: AnyDecoder { get }
-}
-
-public extension ResponseComponent {
-
-    var decoder: AnyDecoder {
-        return JSONDecoder()
-    }
+    var encoding: HTTPEncoding { URLEncoding.default }
 }
