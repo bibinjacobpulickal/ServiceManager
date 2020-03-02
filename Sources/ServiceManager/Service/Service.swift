@@ -8,6 +8,8 @@
 
 import Foundation
 
+public typealias ServiceResult<Object> = Result<Object, Error>
+
 public class Service {
 
     public static let shared = Service()
@@ -22,13 +24,13 @@ public class Service {
 
     public func result<Object: Decodable>(_ url: URLConvertible,
                                           method: HTTPMethod     = .get,
-                                          body: Data?            = nil,
+                                          body: DataConvertible? = nil,
                                           headers: HTTPHeaders?  = nil,
                                           object: Encodable?     = nil,
                                           encoder: AnyEncoder    = JSONEncoder(),
                                           encoding: HTTPEncoding = URLEncoding.default,
                                           decoder: AnyDecoder    = JSONDecoder(),
-                                          _ completion: ((Result<Object, Error>) -> Void)? = nil) {
+                                          _ completion: ((ServiceResult<Object>) -> Void)? = nil) {
         dataResult(url,
                    method: method,
                    body: body,
@@ -42,7 +44,7 @@ public class Service {
 
     private func decodeDataResult<Object: Decodable>(_ result: Result<Data, Error>,
                                                      using decoder: AnyDecoder = JSONDecoder(),
-                                                     _ completion: ((Result<Object, Error>) -> Void)? = nil) {
+                                                     _ completion: ((ServiceResult<Object>) -> Void)? = nil) {
         switch result {
         case .success(let data):
             do {
@@ -69,7 +71,7 @@ public class Service {
 
     public func dataResult(_ route: Route,
                            log: Bool = false,
-                           _ completion: ((Result<Data, Error>) -> Void)?  = nil) {
+                           _ completion: ((ServiceResult<Data>) -> Void)?  = nil) {
         do {
             let url              = try route.asURL()
             let parameters       = try route.object?.jsonObject(using: route.encoder) as? HTTPParameters
@@ -91,12 +93,12 @@ public class Service {
 
     public func dataResult(_ url: URLConvertible,
                            method: HTTPMethod     = .get,
-                           body: Data?            = nil,
+                           body: DataConvertible? = nil,
                            headers: HTTPHeaders?  = nil,
                            object: Encodable?     = nil,
                            encoder: AnyEncoder    = JSONEncoder(),
                            encoding: HTTPEncoding = URLEncoding.default,
-                           _ completion: ((Result<Data, Error>) -> Void)? = nil) {
+                           _ completion: ((ServiceResult<Data>) -> Void)? = nil) {
         do {
             let parameters       = try object?.jsonObject(using: encoder) as? HTTPParameters
             let requestComponent = URLRequestConvertible(url: url, method: method, body: body, parameters: parameters, encoding: encoding, headers: headers)
@@ -155,7 +157,7 @@ public class Service {
     struct URLRequestConvertible: RequestConvertible {
         let url: URLConvertible
         let method: HTTPMethod
-        let body: Data?
+        let body: DataConvertible?
         let parameters: HTTPParameters?
         let encoding: HTTPEncoding
         let headers: HTTPHeaders?
@@ -169,12 +171,12 @@ public class Service {
 
 extension URLRequest {
 
-    public init(url: URLConvertible, method: HTTPMethod, body: Data? = nil, headers: HTTPHeaders? = nil) throws {
+    public init(url: URLConvertible, method: HTTPMethod, body: DataConvertible? = nil, headers: HTTPHeaders? = nil) throws {
         let url = try url.asURL()
         self.init(url: url)
 
         httpMethod = method.value
-        httpBody   = body
+        httpBody   = body?.data
         if let headers = headers {
             for (headerField, headerValue) in headers {
                 setValue(headerValue, forHTTPHeaderField: headerField)

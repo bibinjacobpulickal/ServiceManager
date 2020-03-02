@@ -13,8 +13,8 @@ public protocol RequestComponent: RequestConvertible {
     // URLRequest method eg: GET, POST etc. Defaults to get.
     var method: HTTPMethod { get }
 
-    // URLRequest httpBody of type data. Defaults to nil.
-    var body: Data? { get }
+    // URLRequest httpBody of type DataConvertible. Defaults to nil.
+    var body: DataConvertible? { get }
 
     // URLRequest headers eg: ["Authorization": "Bearer..."]. Defaults to nil.
     var headers: HTTPHeaders? { get }
@@ -33,7 +33,7 @@ public extension RequestComponent {
 
     var method: HTTPMethod { .get }
 
-    var body: Data? { nil }
+    var body: DataConvertible? { nil }
 
     var headers: HTTPHeaders? { nil }
 
