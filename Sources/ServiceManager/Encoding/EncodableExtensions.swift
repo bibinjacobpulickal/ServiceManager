@@ -14,7 +14,7 @@ public extension Encodable {
         return try encoder.encode(self)
     }
 
-    func jsonObject(using encoder: AnyEncoder) throws -> Any {
+    func jsonObject(using encoder: AnyEncoder = JSONEncoder()) throws -> Any {
         let data = try encoder.encode(self)
         return try JSONSerialization.jsonObject(with: data,
                                                 options: .mutableLeaves)
