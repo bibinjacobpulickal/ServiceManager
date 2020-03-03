@@ -20,18 +20,14 @@ public protocol URLComponent: URLConvertible {
     var path: String { get }
 
     // eg: ["key": "item"], defaults to nil.
-    var queries: HTTPParameters? { get }
+    var queries: Encodable? { get }
 }
 
 public extension URLComponent {
 
-    var scheme: HTTPScheme {
-        return .https
-    }
+    var scheme: HTTPScheme { .https }
 
-    var queries: HTTPParameters? {
-        return nil
-    }
+    var queries: Encodable? { nil }
 }
 
 public extension URLComponent {
@@ -41,10 +37,12 @@ public extension URLComponent {
         components.scheme = scheme.rawValue
         components.host = host
         components.path = path
-        queries?.forEach { (key, value) in
-            let query = URLQueryItem(name: key, value: "\(value)")
-            if components.queryItems?.append(query) == nil {
-                components.queryItems = [query]
+        if let queries = try queries?.jsonObject() as? HTTPParameters {
+            for (key, value) in queries {
+                let query = URLQueryItem(name: key, value: "\(value)")
+                if components.queryItems?.append(query) == nil {
+                    components.queryItems = [query]
+                }
             }
         }
         return try components.asURL()
