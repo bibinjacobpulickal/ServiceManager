@@ -10,11 +10,11 @@ import Foundation
 
 public struct PropertyListEncoding: HTTPEncoding {
 
-    public static var `default`: PropertyListEncoding { return PropertyListEncoding() }
+    public static var `default`: PropertyListEncoding { PropertyListEncoding() }
 
-    public static var xml: PropertyListEncoding { return PropertyListEncoding(format: .xml) }
+    public static var xml: PropertyListEncoding { PropertyListEncoding(format: .xml) }
 
-    public static var binary: PropertyListEncoding { return PropertyListEncoding(format: .binary) }
+    public static var binary: PropertyListEncoding { PropertyListEncoding(format: .binary) }
 
     public let format: PropertyListSerialization.PropertyListFormat
 

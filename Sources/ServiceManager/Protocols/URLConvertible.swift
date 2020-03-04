@@ -15,12 +15,12 @@ public protocol URLConvertible: RequestConvertible {
 public extension URLConvertible {
 
     func asRequest() throws -> URLRequest {
-        return try URLRequest(url: asURL())
+        try URLRequest(url: asURL())
     }
 }
 
 extension URL: URLConvertible {
-    public func asURL() throws -> URL { return self }
+    public func asURL() throws -> URL { self }
 }
 
 extension String: URLConvertible {

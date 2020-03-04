@@ -10,9 +10,9 @@ import Foundation
 
 public struct JSONEncoding: HTTPEncoding {
 
-    public static var `default`: JSONEncoding { return JSONEncoding() }
+    public static var `default`: JSONEncoding { JSONEncoding() }
 
-    public static var prettyPrinted: JSONEncoding { return JSONEncoding(options: .prettyPrinted) }
+    public static var prettyPrinted: JSONEncoding { JSONEncoding(options: .prettyPrinted) }
 
     public let options: JSONSerialization.WritingOptions
 

@@ -11,12 +11,11 @@ import Foundation
 public extension Encodable {
 
     func encoded(using encoder: AnyEncoder = JSONEncoder()) throws -> Data {
-        return try encoder.encode(self)
+        try encoder.encode(self)
     }
 
     func jsonObject(using encoder: AnyEncoder = JSONEncoder()) throws -> Any {
-        let data = try encoder.encode(self)
-        return try JSONSerialization.jsonObject(with: data,
-                                                options: .mutableLeaves)
+        try JSONSerialization.jsonObject(with: try encoder.encode(self),
+                                         options: .mutableLeaves)
     }
 }

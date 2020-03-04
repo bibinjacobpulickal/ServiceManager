@@ -16,12 +16,12 @@ import CoreServices
 
 public struct FormDataEncoding: HTTPEncoding {
 
-    public static var `default`: FormDataEncoding { return FormDataEncoding() }
+    public static var `default`: FormDataEncoding { FormDataEncoding() }
 
     var data = MultipartFormData()
 
     public static func formData(_ data: MultipartFormData) -> FormDataEncoding {
-        return FormDataEncoding(data: data)
+        FormDataEncoding(data: data)
     }
 
     public init(data: MultipartFormData = MultipartFormData()) {

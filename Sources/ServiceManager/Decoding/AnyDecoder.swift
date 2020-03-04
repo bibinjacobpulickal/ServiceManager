@@ -17,7 +17,7 @@ extension JSONDecoder: AnyDecoder { }
 public extension Data {
 
     func decoded<T: Decodable>(using decoder: AnyDecoder = JSONDecoder()) throws -> T {
-        return try decoder.decode(T.self, from: self)
+        try decoder.decode(T.self, from: self)
     }
 
     var prettyPrittedString: String {
@@ -34,10 +34,10 @@ public extension Data {
 public extension KeyedDecodingContainerProtocol {
 
     func decode<T: Decodable>(forKey key: Key) throws -> T {
-        return try decode(T.self, forKey: key)
+        try decode(T.self, forKey: key)
     }
 
     func decode<T: Decodable>(forKey key: Key, default defaultExpression: @autoclosure () -> T) throws -> T {
-        return try decodeIfPresent(T.self, forKey: key) ?? defaultExpression()
+        try decodeIfPresent(T.self, forKey: key) ?? defaultExpression()
     }
 }

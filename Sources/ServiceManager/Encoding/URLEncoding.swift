@@ -40,13 +40,13 @@ public struct URLEncoding: HTTPEncoding {
         }
     }
 
-    public static var `default`: URLEncoding { return URLEncoding() }
+    public static var `default`: URLEncoding { URLEncoding() }
 
-    public static var methodDependent: URLEncoding { return URLEncoding() }
+    public static var methodDependent: URLEncoding { URLEncoding() }
 
-    public static var queryString: URLEncoding { return URLEncoding(destination: .queryString) }
+    public static var queryString: URLEncoding { URLEncoding(destination: .queryString) }
 
-    public static var httpBody: URLEncoding { return URLEncoding(destination: .httpBody) }
+    public static var httpBody: URLEncoding { URLEncoding(destination: .httpBody) }
 
     public let destination: Destination
 
@@ -173,5 +173,5 @@ public struct URLEncoding: HTTPEncoding {
 }
 
 extension NSNumber {
-    fileprivate var isBool: Bool { return CFBooleanGetTypeID() == CFGetTypeID(self) }
+    fileprivate var isBool: Bool { CFBooleanGetTypeID() == CFGetTypeID(self) }
 }
