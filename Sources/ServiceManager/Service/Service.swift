@@ -22,29 +22,32 @@ public class Service {
         }
     }
 
-    public func result<Object: Decodable>(_ url: URLConvertible,
-                                          method: HTTPMethod       = .get,
-                                          body: DataConvertible?   = nil,
-                                          headers: HTTPHeaders?    = nil,
-                                          object: Encodable?       = nil,
-                                          encoder: AnyEncoder      = JSONEncoder(),
-                                          encoding: HTTPEncoding?  = nil,
-                                          decoder: AnyDecoder      = JSONDecoder(),
-                                          _ completion: ((ServiceResult<Object>) -> Void)? = nil) {
-        dataResult(url,
-                   method: method,
-                   body: body,
-                   headers: headers,
-                   object: object,
-                   encoder: encoder,
-                   encoding: encoding) { [weak self] result in
-                    self?.decodeDataResult(result, using: decoder, completion)
+    public func result<Object: Decodable>(
+        _ url: URLConvertible,
+        method: HTTPMethod       = .get,
+        body: DataConvertible?   = nil,
+        headers: HTTPHeaders?    = nil,
+        object: Encodable?       = nil,
+        encoder: AnyEncoder      = JSONEncoder(),
+        encoding: HTTPEncoding?  = nil,
+        decoder: AnyDecoder      = JSONDecoder(),
+        _ completion: ((ServiceResult<Object>) -> Void)? = nil) {
+        dataResult(
+            url,
+            method: method,
+            body: body,
+            headers: headers,
+            object: object,
+            encoder: encoder,
+            encoding: encoding) { [weak self] result in
+                self?.decodeDataResult(result, using: decoder, completion)
         }
     }
 
-    private func decodeDataResult<Object: Decodable>(_ result: Result<Data, Error>,
-                                                     using decoder: AnyDecoder = JSONDecoder(),
-                                                     _ completion: ((ServiceResult<Object>) -> Void)? = nil) {
+    private func decodeDataResult<Object: Decodable>(
+        _ result: Result<Data, Error>,
+        using decoder: AnyDecoder = JSONDecoder(),
+        _ completion: ((ServiceResult<Object>) -> Void)? = nil) {
         switch result {
         case .success(let data):
             do {
@@ -69,14 +72,16 @@ public class Service {
         }
     }
 
-    public func dataResult(_ route: Route,
-                           log: Bool = false,
-                           _ completion: ((ServiceResult<Data>) -> Void)?  = nil) {
+    public func dataResult(
+        _ route: Route,
+        log: Bool = false,
+        _ completion: ((ServiceResult<Data>) -> Void)?  = nil) {
         do {
             let url              = try route.asURL()
-            let requestComponent = URLRequestConvertible(url: url, method: route.method, body: route.body,
-                                                         object: route.object, encoder: route.encoder,
-                                                         encoding: route.encoding, headers: route.headers)
+            let requestComponent = URLRequestConvertible(
+                url: url, method: route.method, body: route.body,
+                object: route.object, encoder: route.encoder,
+                encoding: route.encoding, headers: route.headers)
             let request          = try requestComponent.asRequest()
             dataTask(request, log: log) { (data, urlResponse, error) in
                 if let error = error {
@@ -91,18 +96,20 @@ public class Service {
         }
     }
 
-    public func dataResult(_ url: URLConvertible,
-                           method: HTTPMethod       = .get,
-                           body: DataConvertible?   = nil,
-                           headers: HTTPHeaders?    = nil,
-                           object: Encodable?       = nil,
-                           encoder: AnyEncoder      = JSONEncoder(),
-                           encoding: HTTPEncoding?  = nil,
-                           _ completion: ((ServiceResult<Data>) -> Void)? = nil) {
+    public func dataResult(
+        _ url: URLConvertible,
+        method: HTTPMethod       = .get,
+        body: DataConvertible?   = nil,
+        headers: HTTPHeaders?    = nil,
+        object: Encodable?       = nil,
+        encoder: AnyEncoder      = JSONEncoder(),
+        encoding: HTTPEncoding?  = nil,
+        _ completion: ((ServiceResult<Data>) -> Void)? = nil) {
         do {
-            let requestComponent = URLRequestConvertible(url: url, method: method, body: body,
-                                                         object: object, encoder: encoder,
-                                                         encoding: encoding, headers: headers)
+            let requestComponent = URLRequestConvertible(
+                url: url, method: method, body: body,
+                object: object, encoder: encoder,
+                encoding: encoding, headers: headers)
             let request          = try requestComponent.asRequest()
             dataTask(request, log: true) { (data, urlResponse, error) in
                 if let error = error {
@@ -116,9 +123,10 @@ public class Service {
         }
     }
 
-    public func dataTask(_ request: RequestConvertible,
-                         log: Bool = false,
-                         _ completion: ((Data?, HTTPURLResponse?, Error?) -> Void)? = nil) {
+    public func dataTask(
+        _ request: RequestConvertible,
+        log: Bool = false,
+        _ completion: ((Data?, HTTPURLResponse?, Error?) -> Void)? = nil) {
         do {
             let request = try request.asRequest()
             let task    = URLSession.shared.dataTask(with: request) { [weak self] (data, urlResponse, error) in
@@ -180,7 +188,11 @@ public class Service {
 
 extension URLRequest {
 
-    public init(url: URLConvertible, method: HTTPMethod, body: DataConvertible? = nil, headers: HTTPHeaders? = nil) throws {
+    public init(
+        url: URLConvertible,
+        method: HTTPMethod,
+        body: DataConvertible? = nil,
+        headers: HTTPHeaders? = nil) throws {
         let url = try url.asURL()
         self.init(url: url)
 
