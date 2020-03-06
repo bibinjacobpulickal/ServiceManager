@@ -23,13 +23,13 @@ public class Service {
     }
 
     public func result<Object: Decodable>(_ url: URLConvertible,
-                                          method: HTTPMethod     = .get,
-                                          body: DataConvertible? = nil,
-                                          headers: HTTPHeaders?  = nil,
-                                          object: Encodable?     = nil,
-                                          encoder: AnyEncoder    = JSONEncoder(),
-                                          encoding: HTTPEncoding = URLEncoding.default,
-                                          decoder: AnyDecoder    = JSONDecoder(),
+                                          method: HTTPMethod       = .get,
+                                          body: DataConvertible?   = nil,
+                                          headers: HTTPHeaders?    = nil,
+                                          object: Encodable?       = nil,
+                                          encoder: AnyEncoder      = JSONEncoder(),
+                                          encoding: HTTPEncoding?  = nil,
+                                          decoder: AnyDecoder      = JSONDecoder(),
                                           _ completion: ((ServiceResult<Object>) -> Void)? = nil) {
         dataResult(url,
                    method: method,
@@ -74,8 +74,8 @@ public class Service {
                            _ completion: ((ServiceResult<Data>) -> Void)?  = nil) {
         do {
             let url              = try route.asURL()
-            let parameters       = try route.object?.jsonObject(using: route.encoder) as? HTTPParameters
-            let requestComponent = URLRequestConvertible(url: url, method: route.method, body: route.body, parameters: parameters,
+            let requestComponent = URLRequestConvertible(url: url, method: route.method, body: route.body,
+                                                         object: route.object, encoder: route.encoder,
                                                          encoding: route.encoding, headers: route.headers)
             let request          = try requestComponent.asRequest()
             dataTask(request, log: log) { (data, urlResponse, error) in
@@ -92,16 +92,17 @@ public class Service {
     }
 
     public func dataResult(_ url: URLConvertible,
-                           method: HTTPMethod     = .get,
-                           body: DataConvertible? = nil,
-                           headers: HTTPHeaders?  = nil,
-                           object: Encodable?     = nil,
-                           encoder: AnyEncoder    = JSONEncoder(),
-                           encoding: HTTPEncoding = URLEncoding.default,
+                           method: HTTPMethod       = .get,
+                           body: DataConvertible?   = nil,
+                           headers: HTTPHeaders?    = nil,
+                           object: Encodable?       = nil,
+                           encoder: AnyEncoder      = JSONEncoder(),
+                           encoding: HTTPEncoding?  = nil,
                            _ completion: ((ServiceResult<Data>) -> Void)? = nil) {
         do {
-            let parameters       = try object?.jsonObject(using: encoder) as? HTTPParameters
-            let requestComponent = URLRequestConvertible(url: url, method: method, body: body, parameters: parameters, encoding: encoding, headers: headers)
+            let requestComponent = URLRequestConvertible(url: url, method: method, body: body,
+                                                         object: object, encoder: encoder,
+                                                         encoding: encoding, headers: headers)
             let request          = try requestComponent.asRequest()
             dataTask(request, log: true) { (data, urlResponse, error) in
                 if let error = error {
@@ -158,13 +159,21 @@ public class Service {
         let url: URLConvertible
         let method: HTTPMethod
         let body: DataConvertible?
-        let parameters: HTTPParameters?
-        let encoding: HTTPEncoding
+        let object: Encodable?
+        let encoder: AnyEncoder
+        let encoding: HTTPEncoding?
         let headers: HTTPHeaders?
 
         func asRequest() throws -> URLRequest {
-            let request = try URLRequest(url: url, method: method, body: body, headers: headers)
-            return try encoding.encode(request, with: parameters)
+            var request = try URLRequest(url: url, method: method, body: body, headers: headers)
+            if let encoding = encoding {
+                let parameters = try object?.jsonObject(using: encoder) as? HTTPParameters
+                return try encoding.encode(request, with: parameters)
+            } else if let object = object {
+                request.httpBody = try object.encoded(using: encoder)
+                return request
+            }
+            return request
         }
     }
 }
