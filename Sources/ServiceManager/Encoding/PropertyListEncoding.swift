@@ -16,6 +16,8 @@ public struct PropertyListEncoding: HTTPEncoding {
 
     public static var binary: PropertyListEncoding { PropertyListEncoding(format: .binary) }
 
+    public static var openStep: PropertyListEncoding { PropertyListEncoding(format: .openStep) }
+
     public let format: PropertyListSerialization.PropertyListFormat
 
     public let options: PropertyListSerialization.WriteOptions
