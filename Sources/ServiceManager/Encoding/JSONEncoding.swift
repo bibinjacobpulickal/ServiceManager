@@ -14,6 +14,14 @@ public struct JSONEncoding: HTTPEncoding {
 
     public static var prettyPrinted: JSONEncoding { JSONEncoding(options: .prettyPrinted) }
 
+    public static var fragmentsAllowed: JSONEncoding { JSONEncoding(options: .fragmentsAllowed) }
+
+    @available(OSX 10.13, *)
+    public static var sortedKeys: JSONEncoding { JSONEncoding(options: .sortedKeys) }
+
+    @available(OSX 10.15, *)
+    public static var withoutEscapingSlashes: JSONEncoding { JSONEncoding(options: .withoutEscapingSlashes) }
+
     public let options: JSONSerialization.WritingOptions
 
     public init(options: JSONSerialization.WritingOptions = []) {
