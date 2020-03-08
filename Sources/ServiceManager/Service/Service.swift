@@ -9,6 +9,7 @@
 import Foundation
 
 public typealias ServiceResult<Object> = Result<Object, Error>
+public typealias ServiceCompletion<Object> = ((Result<Object, Error>) -> Void)?
 
 public class Service {
 
@@ -16,7 +17,7 @@ public class Service {
 
     public func result<Object: Decodable>(_ route: Route,
                                           log: Bool = false,
-                                          _ completion: ((Result<Object, Error>) -> Void)? = nil) {
+                                          _ completion: ServiceCompletion<Object> = nil) {
         dataResult(route, log: log) { [weak self] result in
             self?.decodeDataResult(result, using: route.decoder, completion)
         }
@@ -31,7 +32,7 @@ public class Service {
         encoder: AnyEncoder      = JSONEncoder(),
         encoding: HTTPEncoding?  = nil,
         decoder: AnyDecoder      = JSONDecoder(),
-        _ completion: ((ServiceResult<Object>) -> Void)? = nil) {
+        _ completion: ServiceCompletion<Object> = nil) {
         dataResult(
             url,
             method: method,
@@ -47,7 +48,7 @@ public class Service {
     private func decodeDataResult<Object: Decodable>(
         _ result: Result<Data, Error>,
         using decoder: AnyDecoder = JSONDecoder(),
-        _ completion: ((ServiceResult<Object>) -> Void)? = nil) {
+        _ completion: ServiceCompletion<Object> = nil) {
         switch result {
         case .success(let data):
             do {
@@ -75,7 +76,7 @@ public class Service {
     public func dataResult(
         _ route: Route,
         log: Bool = false,
-        _ completion: ((ServiceResult<Data>) -> Void)?  = nil) {
+        _ completion: ServiceCompletion<Data>  = nil) {
         do {
             let url              = try route.asURL()
             let requestComponent = URLRequestConvertible(
@@ -104,7 +105,7 @@ public class Service {
         object: Encodable?       = nil,
         encoder: AnyEncoder      = JSONEncoder(),
         encoding: HTTPEncoding?  = nil,
-        _ completion: ((ServiceResult<Data>) -> Void)? = nil) {
+        _ completion: ServiceCompletion<Data> = nil) {
         do {
             let requestComponent = URLRequestConvertible(
                 url: url, method: method, body: body,
