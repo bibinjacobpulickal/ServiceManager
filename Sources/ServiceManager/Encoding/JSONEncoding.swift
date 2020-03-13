@@ -16,9 +16,11 @@ public struct JSONEncoding: HTTPEncoding {
 
     public static var fragmentsAllowed: JSONEncoding { JSONEncoding(options: .fragmentsAllowed) }
 
+    @available(iOS 11.0, *)
     @available(OSX 10.13, *)
     public static var sortedKeys: JSONEncoding { JSONEncoding(options: .sortedKeys) }
 
+    @available(iOS 13.0, *)
     @available(OSX 10.15, *)
     public static var withoutEscapingSlashes: JSONEncoding { JSONEncoding(options: .withoutEscapingSlashes) }
 
