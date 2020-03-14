@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct URLEncoding: HTTPEncoding {
+public struct URLEncoding: HTTPParameterEncoding {
 
     public enum Destination {
         case methodDependent, queryString, httpBody

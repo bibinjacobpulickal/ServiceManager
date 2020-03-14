@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct PropertyListEncoding: HTTPEncoding {
+public struct PropertyListEncoding: HTTPParameterEncoding {
 
     public static var `default`: PropertyListEncoding { PropertyListEncoding() }
 

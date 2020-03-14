@@ -176,8 +176,7 @@ public class Service {
         func asRequest() throws -> URLRequest {
             var request = try URLRequest(url: url, method: method, body: body, headers: headers)
             if let encoding = encoding {
-                let parameters = try object?.jsonObject(using: encoder) as? HTTPParameters
-                return try encoding.encode(request, with: parameters)
+                return try encoding.encode(request, with: object, using: encoder)
             } else if let object = object {
                 request.httpBody = try object.encoded(using: encoder)
                 return request

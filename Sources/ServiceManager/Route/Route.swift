@@ -14,11 +14,7 @@ extension Route {
 
     func asRequest() throws -> URLRequest {
         let url            = try asURL()
-        let request        = try URLRequest(url: url, method: method, headers: headers)
-        if let object      = object,
-            let parameters = try object.jsonObject(using: encoder) as? [String: Any] {
-            return try encoding.encode(request, with: parameters)
-        }
-        return request
+        let request        = try URLRequest(url: url, method: method, body: body, headers: headers)
+        return try encoding.encode(request, with: object, using: encoder)
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct JSONEncoding: HTTPEncoding {
+public struct JSONEncoding: HTTPParameterEncoding {
 
     public static var `default`: JSONEncoding { JSONEncoding() }
 

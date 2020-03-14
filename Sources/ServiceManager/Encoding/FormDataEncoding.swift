@@ -14,7 +14,7 @@ import MobileCoreServices
 import CoreServices
 #endif
 
-public struct FormDataEncoding: HTTPEncoding {
+public struct FormDataEncoding: HTTPParameterEncoding {
 
     public static var `default`: FormDataEncoding { FormDataEncoding() }
 
