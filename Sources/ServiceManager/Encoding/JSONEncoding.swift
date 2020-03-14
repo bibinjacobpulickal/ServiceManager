@@ -8,9 +8,11 @@
 
 import Foundation
 
-public struct JSONEncoding: HTTPParameterEncoding {
+public struct JSONEncoding: HTTPEncoding {
 
     public static var `default`: JSONEncoding { JSONEncoding() }
+
+    public static var empty: JSONEncoding { JSONEncoding(options: []) }
 
     public static var prettyPrinted: JSONEncoding { JSONEncoding(options: .prettyPrinted) }
 
@@ -24,47 +26,32 @@ public struct JSONEncoding: HTTPParameterEncoding {
     @available(OSX 10.15, *)
     public static var withoutEscapingSlashes: JSONEncoding { JSONEncoding(options: .withoutEscapingSlashes) }
 
-    public let options: JSONSerialization.WritingOptions
+    public let options: JSONSerialization.WritingOptions?
 
-    public init(options: JSONSerialization.WritingOptions = []) {
+    public init(options: JSONSerialization.WritingOptions? = nil) {
         self.options = options
     }
 
-    public func encode(_ urlRequest: RequestConvertible, with parameters: HTTPParameters?) throws -> URLRequest {
+    public func encode(_ urlRequest: RequestConvertible, with object: Encodable?, using encoder: AnyEncoder) throws -> URLRequest {
         var urlRequest = try urlRequest.asRequest()
 
-        guard let parameters = parameters else { return urlRequest }
+        guard let object = object else { return urlRequest }
 
         do {
-            let data = try JSONSerialization.data(withJSONObject: parameters, options: options)
+            if let options = options {
 
-            if urlRequest.value(for: .contentType) == nil {
-                urlRequest.setValue("application/json", for: .contentType)
+                let jsonObject = try object.jsonObject(using: encoder)
+
+                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: jsonObject, options: options)
+            } else {
+
+                urlRequest.httpBody = try object.encoded(using: encoder)
             }
-
-            urlRequest.httpBody = data
         } catch {
             throw HTTPError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
         }
-
-        return urlRequest
-    }
-
-    public func encode(_ urlRequest: RequestConvertible, withJSONObject jsonObject: Any? = nil) throws -> URLRequest {
-        var urlRequest = try urlRequest.asRequest()
-
-        guard let jsonObject = jsonObject else { return urlRequest }
-
-        do {
-            let data = try JSONSerialization.data(withJSONObject: jsonObject, options: options)
-
-            if urlRequest.value(for: .contentType) == nil {
-                urlRequest.setValue("application/json", for: .contentType)
-            }
-
-            urlRequest.httpBody = data
-        } catch {
-            throw HTTPError.parameterEncodingFailed(reason: .jsonEncodingFailed(error: error))
+        if urlRequest.value(for: .contentType) == nil {
+            urlRequest.setValue("application/json", for: .contentType)
         }
 
         return urlRequest
