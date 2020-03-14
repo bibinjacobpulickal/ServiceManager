@@ -30,7 +30,7 @@ public class Service {
         headers: HTTPHeaders?    = nil,
         object: Encodable?       = nil,
         encoder: AnyEncoder      = JSONEncoder(),
-        encoding: HTTPEncoding?  = nil,
+        encoding: HTTPEncoding   = JSONEncoding.default,
         decoder: AnyDecoder      = JSONDecoder(),
         _ completion: ServiceCompletion<Object> = nil) {
         dataResult(
@@ -104,7 +104,7 @@ public class Service {
         headers: HTTPHeaders?    = nil,
         object: Encodable?       = nil,
         encoder: AnyEncoder      = JSONEncoder(),
-        encoding: HTTPEncoding?  = nil,
+        encoding: HTTPEncoding   = JSONEncoding.default,
         _ completion: ServiceCompletion<Data> = nil) {
         do {
             let requestComponent = URLRequestConvertible(
@@ -170,18 +170,12 @@ public class Service {
         let body: DataConvertible?
         let object: Encodable?
         let encoder: AnyEncoder
-        let encoding: HTTPEncoding?
+        let encoding: HTTPEncoding
         let headers: HTTPHeaders?
 
         func asRequest() throws -> URLRequest {
-            var request = try URLRequest(url: url, method: method, body: body, headers: headers)
-            if let encoding = encoding {
-                return try encoding.encode(request, with: object, using: encoder)
-            } else if let object = object {
-                request.httpBody = try object.encoded(using: encoder)
-                return request
-            }
-            return request
+            let request = try URLRequest(url: url, method: method, body: body, headers: headers)
+            return try encoding.encode(request, with: object, using: encoder)
         }
     }
 }
