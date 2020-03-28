@@ -144,26 +144,26 @@ public class Service {
 
     func logSession(log: Bool, request: URLRequest?, response: HTTPURLResponse?, error: Error?, data: Data?) {
 
-        if log == false && error == nil && !(200..<300).contains(response?.statusCode ?? 0) {
+        if log == false && error == nil && (200..<300).contains(response?.statusCode ?? 0) {
             return
         }
         if request != nil {
             print("\(request?.httpMethod ?? "URL"):\t\t\(request?.url?.absoluteString ?? "Empty url string")")
         }
         if let headers = request?.allHTTPHeaderFields, !headers.isEmpty {
-            print("Header:\t\(headers)")
+            print("Header:\t\t\(headers)")
         }
         if let data = request?.httpBody, !data.isEmpty {
-            print("Body:\t  Size: \(data)\n\(data.prettyPrittedString)")
+            print("Body:\t\tSize: \(data)\n\(data.prettyPrittedString)")
         }
         if let statusCode = response?.statusCode {
             print("Status Code: \t\(statusCode)")
         }
         if let data = data, !data.isEmpty {
-            print("Response: Size: \(data)\n\(data.prettyPrittedString)")
+            print("Response:\t\tSize: \(data)\n\(data.prettyPrittedString)")
         }
         if let error = error {
-            print("Error:\t\(error.localizedDescription)")
+            print("Error:\t\t\(error.localizedDescription)")
         }
     }
 
