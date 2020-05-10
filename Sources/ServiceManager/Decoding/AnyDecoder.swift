@@ -20,7 +20,7 @@ public extension Data {
         try decoder.decode(T.self, from: self)
     }
 
-    var prettyPrittedString: String {
+    var prettyPrintedString: String {
         if let object = try? JSONSerialization.jsonObject(with: self, options: .mutableLeaves),
             JSONSerialization.isValidJSONObject(object),
             let data = try? JSONSerialization.data(withJSONObject: object, options: .prettyPrinted) {
