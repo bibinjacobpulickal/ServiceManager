@@ -154,13 +154,13 @@ public class Service {
             print("Header:\t\t\(headers)")
         }
         if let data = request?.httpBody, !data.isEmpty {
-            print("Body:\t\tSize: \(data)\n\(data.prettyPrittedString)")
+            print("Body:\t\tSize: \(data)\n\(data.prettyPrintedString)")
         }
         if let statusCode = response?.statusCode {
             print("Status Code: \t\(statusCode)")
         }
         if let data = data, !data.isEmpty {
-            print("Response:\t\tSize: \(data)\n\(data.prettyPrittedString)")
+            print("Response:\t\tSize: \(data)\n\(data.prettyPrintedString)")
         }
         if let error = error {
             print("Error:\t\t\(error.localizedDescription)")
