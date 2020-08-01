@@ -79,11 +79,11 @@ public class Service {
         _ completion: ServiceCompletion<Data>  = nil) {
         do {
             let url              = try route.asURL()
-            let requestComponent = URLRequestConvertible(
+            let requestComponent = RequestConvertible(
                 url: url, method: route.method, body: route.body,
                 object: route.object, encoder: route.encoder,
                 encoding: route.encoding, headers: route.headers)
-            let request          = try requestComponent.asRequest()
+            let request          = try requestComponent.asURLRequest()
             dataTask(request, log: log) { (data, urlResponse, error) in
                 if let error = error {
                     completion?(.failure(error))
@@ -107,11 +107,11 @@ public class Service {
         encoding: HTTPEncoding   = JSONEncoding.default,
         _ completion: ServiceCompletion<Data> = nil) {
         do {
-            let requestComponent = URLRequestConvertible(
+            let requestComponent = RequestConvertible(
                 url: url, method: method, body: body,
                 object: object, encoder: encoder,
                 encoding: encoding, headers: headers)
-            let request          = try requestComponent.asRequest()
+            let request          = try requestComponent.asURLRequest()
             dataTask(request, log: true) { (data, urlResponse, error) in
                 if let error = error {
                     completion?(.failure(error))
@@ -129,7 +129,7 @@ public class Service {
         log: Bool = false,
         _ completion: ((Data?, HTTPURLResponse?, Error?) -> Void)? = nil) {
         do {
-            let request = try request.asRequest()
+            let request = try request.asURLRequest()
             let task    = URLSession.shared.dataTask(with: request) { [weak self] (data, urlResponse, error) in
                 let httpUrlResponse = urlResponse as? HTTPURLResponse
                 self?.logSession(log: log, request: request, response: httpUrlResponse, error: error, data: data)
@@ -167,7 +167,7 @@ public class Service {
         }
     }
 
-    struct URLRequestConvertible: URLRequestConvertible {
+    struct RequestConvertible: URLRequestConvertible {
         let url: URLConvertible
         let method: HTTPMethod
         let body: DataConvertible?
@@ -176,7 +176,7 @@ public class Service {
         let encoding: HTTPEncoding
         let headers: HTTPHeaders?
 
-        func asRequest() throws -> URLRequest {
+        func asURLRequest() throws -> URLRequest {
             let request = try URLRequest(url: url, method: method, body: body, headers: headers)
             return try encoding.encode(request, with: object, using: encoder)
         }
