@@ -32,8 +32,8 @@ public struct JSONEncoding: HTTPEncoding {
         self.options = options
     }
 
-    public func encode(_ urlRequest: RequestConvertible, with object: Encodable?, using encoder: AnyEncoder) throws -> URLRequest {
-        var urlRequest = try urlRequest.asRequest()
+    public func encode(_ urlRequest: URLRequestConvertible, with object: Encodable?, using encoder: AnyEncoder) throws -> URLRequest {
+        var urlRequest = try urlRequest.asURLRequest()
 
         guard let object = object else { return urlRequest }
 

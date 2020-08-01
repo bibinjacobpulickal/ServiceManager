@@ -24,8 +24,8 @@
 		EF95AD9424683F5500221FDF /* URLComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95AD9024683F5500221FDF /* URLComponent.swift */; };
 		EF95AD9524683F5500221FDF /* ResponseComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95AD9124683F5500221FDF /* ResponseComponent.swift */; };
 		EF95AD9824683F6600221FDF /* RequestComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95AD9724683F6600221FDF /* RequestComponent.swift */; };
-		EF95AD9D24683F7900221FDF /* RequestConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95AD9A24683F7900221FDF /* RequestConvertible.swift */; };
-		EF95AD9E24683F7900221FDF /* URLConvertible+URLRequestConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95AD9B24683F7900221FDF /* URLConvertible+URLRequestConvertible.swift */; };
+		EF95AD9D24683F7900221FDF /* URLRequestConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95AD9A24683F7900221FDF /* URLRequestConvertible.swift */; };
+		EF95AD9E24683F7900221FDF /* URLConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95AD9B24683F7900221FDF /* URLConvertible.swift */; };
 		EF95ADA024683F8600221FDF /* DataConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95AD9F24683F8600221FDF /* DataConvertible.swift */; };
 		EF95ADD02468598600221FDF /* AnyEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95ADCF2468598600221FDF /* AnyEncoder.swift */; };
 /* End PBXBuildFile section */
@@ -50,8 +50,8 @@
 		EF95AD9024683F5500221FDF /* URLComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLComponent.swift; path = Sources/ServiceManager/Route/URLComponent.swift; sourceTree = SOURCE_ROOT; };
 		EF95AD9124683F5500221FDF /* ResponseComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ResponseComponent.swift; path = Sources/ServiceManager/Route/ResponseComponent.swift; sourceTree = SOURCE_ROOT; };
 		EF95AD9724683F6600221FDF /* RequestComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestComponent.swift; path = Sources/ServiceManager/Route/RequestComponent.swift; sourceTree = SOURCE_ROOT; };
-		EF95AD9A24683F7900221FDF /* RequestConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestConvertible.swift; path = Sources/ServiceManager/Protocols/RequestConvertible.swift; sourceTree = SOURCE_ROOT; };
-		EF95AD9B24683F7900221FDF /* URLConvertible+URLRequestConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "URLConvertible+URLRequestConvertible.swift"; path = "Sources/ServiceManager/Protocols/URLConvertible+URLRequestConvertible.swift"; sourceTree = SOURCE_ROOT; };
+		EF95AD9A24683F7900221FDF /* URLRequestConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLRequestConvertible.swift; path = Sources/ServiceManager/Protocols/URLRequestConvertible.swift; sourceTree = SOURCE_ROOT; };
+		EF95AD9B24683F7900221FDF /* URLConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLConvertible.swift; path = Sources/ServiceManager/Protocols/URLConvertible.swift; sourceTree = SOURCE_ROOT; };
 		EF95AD9F24683F8600221FDF /* DataConvertible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataConvertible.swift; path = Sources/ServiceManager/Protocols/DataConvertible.swift; sourceTree = SOURCE_ROOT; };
 		EF95ADCF2468598600221FDF /* AnyEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnyEncoder.swift; path = Sources/ServiceManager/Encoding/AnyEncoder.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -71,8 +71,8 @@
 			isa = PBXGroup;
 			children = (
 				EF95AD9F24683F8600221FDF /* DataConvertible.swift */,
-				EF95AD9A24683F7900221FDF /* RequestConvertible.swift */,
-				EF95AD9B24683F7900221FDF /* URLConvertible+URLRequestConvertible.swift */,
+				EF95AD9B24683F7900221FDF /* URLConvertible.swift */,
+				EF95AD9A24683F7900221FDF /* URLRequestConvertible.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -252,9 +252,9 @@
 				EF95AD7D24683E9200221FDF /* JSONEncoding.swift in Sources */,
 				EF95AD8924683EF800221FDF /* HTTPHeader.swift in Sources */,
 				EF95AD8E24683F2D00221FDF /* HTTPError.swift in Sources */,
-				EF95AD9E24683F7900221FDF /* URLConvertible+URLRequestConvertible.swift in Sources */,
+				EF95AD9E24683F7900221FDF /* URLConvertible.swift in Sources */,
 				EF95AD7A24683E9200221FDF /* EncodableExtensions.swift in Sources */,
-				EF95AD9D24683F7900221FDF /* RequestConvertible.swift in Sources */,
+				EF95AD9D24683F7900221FDF /* URLRequestConvertible.swift in Sources */,
 				EF95ADA024683F8600221FDF /* DataConvertible.swift in Sources */,
 				EF95AD7C24683E9200221FDF /* HTTPEncoding.swift in Sources */,
 				EF95AD7E24683E9200221FDF /* FormDataEncoding.swift in Sources */,

@@ -125,7 +125,7 @@ public class Service {
     }
 
     public func dataTask(
-        _ request: RequestConvertible,
+        _ request: URLRequestConvertible,
         log: Bool = false,
         _ completion: ((Data?, HTTPURLResponse?, Error?) -> Void)? = nil) {
         do {
@@ -167,7 +167,7 @@ public class Service {
         }
     }
 
-    struct URLRequestConvertible: RequestConvertible {
+    struct URLRequestConvertible: URLRequestConvertible {
         let url: URLConvertible
         let method: HTTPMethod
         let body: DataConvertible?

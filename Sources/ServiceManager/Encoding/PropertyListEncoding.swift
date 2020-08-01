@@ -30,8 +30,8 @@ public struct PropertyListEncoding: HTTPParameterEncoding {
         self.options = options
     }
 
-    public func encode(_ urlRequest: RequestConvertible, with parameters: HTTPParameters?) throws -> URLRequest {
-        var urlRequest = try urlRequest.asRequest()
+    public func encode(_ urlRequest: URLRequestConvertible, with parameters: HTTPParameters?) throws -> URLRequest {
+        var urlRequest = try urlRequest.asURLRequest()
 
         guard let parameters = parameters else { return urlRequest }
 

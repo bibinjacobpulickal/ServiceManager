@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol RequestComponent: RequestConvertible {
+public protocol RequestComponent: URLRequestConvertible {
 
     // URLRequest method eg: GET, POST etc. Defaults to get.
     var method: HTTPMethod { get }

@@ -1,5 +1,5 @@
 //
-//  URLConvertible+URLRequestConvertible.swift
+//  URLConvertible.swift
 //
 //  Copyright © 2020 Bibin Jacob Pulickal (https://github.com/bibinjacobpulickal)
 //
@@ -61,25 +61,4 @@ extension URLComponents: URLConvertible {
 
         return url
     }
-}
-
-// MARK: -
-
-/// Types adopting the `URLRequestConvertible` protocol can be used to safely construct `URLRequest`s.
-public protocol URLRequestConvertible {
-    /// Returns a `URLRequest` or throws if an `Error` was encountered.
-    ///
-    /// - Returns: A `URLRequest`.
-    /// - Throws:  Any error thrown while constructing the `URLRequest`.
-    func asURLRequest() throws -> URLRequest
-}
-
-extension URLRequestConvertible {
-    /// The `URLRequest` returned by discarding any `Error` encountered.
-    public var urlRequest: URLRequest? { try? asURLRequest() }
-}
-
-extension URLRequest: URLRequestConvertible {
-    /// Returns `self`.
-    public func asURLRequest() throws -> URLRequest { self }
 }
