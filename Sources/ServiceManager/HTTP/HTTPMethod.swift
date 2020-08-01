@@ -26,7 +26,7 @@
 /// `HTTPMethod.get != HTTPMethod(rawValue: "get")`.
 ///
 /// See https://tools.ietf.org/html/rfc7231#section-4.3
-public struct HTTPMethod: Equatable {
+public struct HTTPMethod: RawRepresentable, Equatable, Hashable {
     /// `CONNECT` method.
     public static let connect = HTTPMethod(rawValue: "CONNECT")
     /// `DELETE` method.
@@ -47,4 +47,8 @@ public struct HTTPMethod: Equatable {
     public static let trace   = HTTPMethod(rawValue: "TRACE")
 
     public let rawValue: String
+
+    public init(rawValue: String) {
+        self.rawValue = rawValue
+    }
 }
