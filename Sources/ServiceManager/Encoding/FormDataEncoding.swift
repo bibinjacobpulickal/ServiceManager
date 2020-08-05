@@ -14,7 +14,7 @@ import MobileCoreServices
 import CoreServices
 #endif
 
-public struct FormDataEncoding: HTTPParameterEncoding {
+public struct FormDataEncoding: ParameterEncoding {
 
     public static var `default`: FormDataEncoding { FormDataEncoding() }
 
@@ -28,7 +28,7 @@ public struct FormDataEncoding: HTTPParameterEncoding {
         self.data = data
     }
 
-    public func encode(_ urlRequest: URLRequestConvertible, with parameters: HTTPParameters?) throws -> URLRequest {
+    public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
         var urlRequest = try urlRequest.asURLRequest()
 
         let formData = data

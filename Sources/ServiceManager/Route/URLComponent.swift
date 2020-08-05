@@ -37,7 +37,7 @@ public extension URLComponent {
         components.scheme = scheme.rawValue
         components.host = host
         components.path = path
-        if let queries = try queries?.jsonObject() as? HTTPParameters {
+        if let queries = try queries?.jsonObject() as? Parameters {
             for (key, value) in queries {
                 let query = URLQueryItem(name: key, value: "\(value)")
                 if components.queryItems?.append(query) == nil {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct URLEncoding: HTTPParameterEncoding {
+public struct URLEncoding: ParameterEncoding {
 
     public enum Destination {
         case methodDependent, queryString, httpBody
@@ -60,7 +60,7 @@ public struct URLEncoding: HTTPParameterEncoding {
         self.boolEncoding = boolEncoding
     }
 
-    public func encode(_ urlRequest: URLRequestConvertible, with parameters: HTTPParameters?) throws -> URLRequest {
+    public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
         var urlRequest = try urlRequest.asURLRequest()
 
         guard let parameters = parameters else { return urlRequest }

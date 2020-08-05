@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct PropertyListEncoding: HTTPParameterEncoding {
+public struct PropertyListEncoding: ParameterEncoding {
 
     public static var `default`: PropertyListEncoding { PropertyListEncoding() }
 
@@ -30,7 +30,7 @@ public struct PropertyListEncoding: HTTPParameterEncoding {
         self.options = options
     }
 
-    public func encode(_ urlRequest: URLRequestConvertible, with parameters: HTTPParameters?) throws -> URLRequest {
+    public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
         var urlRequest = try urlRequest.asURLRequest()
 
         guard let parameters = parameters else { return urlRequest }
