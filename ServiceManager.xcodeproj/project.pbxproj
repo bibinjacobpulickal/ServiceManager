@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF34E88124DDEAF100F6A611 /* BBServiceKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF34E88024DDEAF100F6A611 /* BBServiceKit.swift */; };
 		EF95AD6F24683DED00221FDF /* ServiceManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF95AD6C24683DED00221FDF /* ServiceManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF95AD7024683DED00221FDF /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95AD6D24683DED00221FDF /* Service.swift */; };
 		EF95AD7824683E9200221FDF /* URLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF95AD7124683E9200221FDF /* URLEncoding.swift */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		AD4F4D1422CB8B4F00EBE63B /* ServiceManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ServiceManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF34E88024DDEAF100F6A611 /* BBServiceKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BBServiceKit.swift; sourceTree = "<group>"; };
 		EF95AD6B24683DED00221FDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Sources/ServiceManager/Service/Info.plist; sourceTree = SOURCE_ROOT; };
 		EF95AD6C24683DED00221FDF /* ServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServiceManager.h; path = Sources/ServiceManager/Service/ServiceManager.h; sourceTree = SOURCE_ROOT; };
 		EF95AD6D24683DED00221FDF /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Service.swift; path = Sources/ServiceManager/Service/Service.swift; sourceTree = SOURCE_ROOT; };
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				EF95AD6B24683DED00221FDF /* Info.plist */,
+				EF34E88024DDEAF100F6A611 /* BBServiceKit.swift */,
 				EF95AD6D24683DED00221FDF /* Service.swift */,
 				EF95AD6C24683DED00221FDF /* ServiceManager.h */,
 			);
@@ -251,6 +254,7 @@
 				EF95AD9424683F5500221FDF /* URLComponent.swift in Sources */,
 				EF95AD7D24683E9200221FDF /* JSONEncoding.swift in Sources */,
 				EF95AD8924683EF800221FDF /* HTTPHeader.swift in Sources */,
+				EF34E88124DDEAF100F6A611 /* BBServiceKit.swift in Sources */,
 				EF95AD8E24683F2D00221FDF /* HTTPError.swift in Sources */,
 				EF95AD9E24683F7900221FDF /* URLConvertible.swift in Sources */,
 				EF95AD7A24683E9200221FDF /* EncodableExtensions.swift in Sources */,
