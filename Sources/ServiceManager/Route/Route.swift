@@ -10,7 +10,7 @@ import Foundation
 
 public protocol Route: URLComponent, RequestComponent, ResponseComponent { }
 
-extension Route {
+public extension Route {
 
     func asURLRequest() throws -> URLRequest {
         let url            = try asURL()
