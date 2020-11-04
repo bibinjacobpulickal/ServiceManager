@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 /// Reference to `Service.shared` for quick bootstrapping and examples.
 public let BB = Service.shared
 

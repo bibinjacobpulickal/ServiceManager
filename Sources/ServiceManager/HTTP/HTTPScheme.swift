@@ -22,6 +22,8 @@
 //  THE SOFTWARE.
 //
 
+import Foundation
+
 public struct HTTPScheme {
     /// `HTTPS` scheme.
     public static let https = HTTPScheme(rawValue: "https")
