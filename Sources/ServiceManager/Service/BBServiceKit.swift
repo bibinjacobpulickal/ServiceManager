@@ -28,4 +28,4 @@ import Foundation
 public let BB = Service.shared
 
 /// Current BBServiceKit version. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
-let version = "1.1.12"
+let version = "1.2.0"
