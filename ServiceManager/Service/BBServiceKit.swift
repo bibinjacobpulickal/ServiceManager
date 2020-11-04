@@ -24,3 +24,6 @@
 
 /// Reference to `Service.shared` for quick bootstrapping and examples.
 public let BB = Service.shared
+
+/// Current BBServiceKit version. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
+let version = "1.1.10"

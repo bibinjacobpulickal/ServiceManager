@@ -38,7 +38,7 @@ extension String: URLConvertible {
     /// Returns a `URL` if `self` can be used to initialize a `URL` instance, otherwise throws.
     ///
     /// - Returns: The `URL` initialized with `self`.
-    /// - Throws:  An `AFError.invalidURL` instance.
+    /// - Throws:  An `HTTPError.invalidURL` instance.
     public func asURL() throws -> URL {
         guard let url = URL(string: self) else { throw HTTPError.invalidURL(url: self) }
 
@@ -55,7 +55,7 @@ extension URLComponents: URLConvertible {
     /// Returns a `URL` if the `self`'s `url` is not nil, otherwise throws.
     ///
     /// - Returns: The `URL` from the `url` property.
-    /// - Throws:  An `AFError.invalidURL` instance.
+    /// - Throws:  An `HTTPError.invalidURL` instance.
     public func asURL() throws -> URL {
         guard let url = url else { throw HTTPError.invalidURL(url: self) }
 
