@@ -32,6 +32,9 @@ public protocol URLComponent: URLConvertible {
     // eg: www.google.com
     var host: String { get }
 
+    // eg: 8080
+    var port: Int? { get }
+
     // eg: /search
     var path: String { get }
 
@@ -43,6 +46,8 @@ public extension URLComponent {
 
     var scheme: HTTPScheme { .https }
 
+    var port: Int? { nil }
+
     var queries: Encodable? { nil }
 }
 
@@ -52,6 +57,7 @@ public extension URLComponent {
         var components = URLComponents()
         components.scheme = scheme.rawValue
         components.host = host
+        components.port = port
         components.path = path
         if let queries = try queries?.jsonObject() as? Parameters {
             for (key, value) in queries {
