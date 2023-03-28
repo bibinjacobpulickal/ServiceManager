@@ -27,9 +27,40 @@ import Foundation
 public typealias ServiceResult<Object> = Result<Object, Error>
 public typealias ServiceCompletion<Object> = ((Result<Object, Error>) -> Void)?
 
-public class Service {
+public final class Service {
 
-    public static let shared = Service()
+  public static let shared = Service()
+  private let session = URLSession.shared
+
+  @available(macOS 10.15.0, *)
+  @available(iOS 13.0.0, *)
+  public func object<Object: Decodable>(
+    _ url: URLConvertible,
+    log: Bool = false,
+    decoder: AnyDecoder = JSONDecoder()) async throws -> Object {
+      let (data, _) = try await dataResponse(url)
+      return try decoder.decode(Object.self, from: data)
+    }
+
+  @available(macOS 10.15.0, *)
+  @available(iOS 13.0.0, *)
+  public func objectResponse<Object: Decodable>(
+    _ url: URLConvertible,
+    log: Bool = false,
+    decoder: AnyDecoder = JSONDecoder()) async throws -> (Object, URLResponse) {
+      let (data, response) = try await dataResponse(url, log: log)
+      return (try decoder.decode(Object.self, from: data), response)
+    }
+
+  @available(macOS 10.15.0, *)
+  @available(iOS 13.0.0, *)
+  public func dataResponse(
+    _ url: URLConvertible,
+    log: Bool = false) async throws -> (Data, URLResponse) {
+      let (data, response) = try await session.data(from: try url.asURL())
+      if log { logSession(log: log, request: url, response: response, error: nil, data: data) }
+      return (data, response)
+    }
 
     public func result<Object: Decodable>(_ route: Route,
                                           log: Bool = false,
@@ -146,7 +177,7 @@ public class Service {
         _ completion: ((Data?, HTTPURLResponse?, Error?) -> Void)? = nil) {
         do {
             let request = try request.asURLRequest()
-            let task    = URLSession.shared.dataTask(with: request) { [weak self] (data, urlResponse, error) in
+            let task    = session.dataTask(with: request) { [weak self] (data, urlResponse, error) in
                 let httpUrlResponse = urlResponse as? HTTPURLResponse
                 self?.logSession(log: log, request: request, response: httpUrlResponse, error: error, data: data)
                 DispatchQueue.main.async { completion?(data, httpUrlResponse, error) }
