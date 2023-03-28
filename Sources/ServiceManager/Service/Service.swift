@@ -158,21 +158,21 @@ public class Service {
         }
     }
 
-    func logSession(log: Bool, request: URLRequest?, response: HTTPURLResponse?, error: Error?, data: Data?) {
+    func logSession(log: Bool, request: URLRequestConvertible?, response: HTTPURLResponseConvertible?, error: Error?, data: Data?) {
 
-        if log == false && error == nil && (200..<300).contains(response?.statusCode ?? 0) {
+        if log == false && error == nil && (200..<300).contains((try? response?.asHTTPURLResponse())?.statusCode ?? 0) {
             return
         }
-        if request != nil {
-            print("\(request?.httpMethod ?? "URL"):\t\t\(request?.url?.absoluteString ?? "Empty url string")")
+      if let request = try? request?.asURLRequest() {
+        print("\(request.httpMethod ?? "URL"):\t\t\(request.url?.absoluteString ?? "Empty url string")")
+        if let headers = request.allHTTPHeaderFields, !headers.isEmpty {
+          print("Header:\t\t\(headers)")
         }
-        if let headers = request?.allHTTPHeaderFields, !headers.isEmpty {
-            print("Header:\t\t\(headers)")
+        if let data = request.httpBody, !data.isEmpty {
+          print("Body:\t\tSize: \(data)\n\(data.prettyPrintedString)")
         }
-        if let data = request?.httpBody, !data.isEmpty {
-            print("Body:\t\tSize: \(data)\n\(data.prettyPrintedString)")
-        }
-        if let statusCode = response?.statusCode {
+      }
+      if let statusCode = (try? response?.asHTTPURLResponse())?.statusCode {
             print("Status Code: \t\(statusCode)")
         }
         if let data = data, !data.isEmpty {
