@@ -28,7 +28,6 @@ public enum HTTPError: Error {
 
     public enum ParameterEncodingFailureReason {
         case missingURL
-        case optionalDictionaryCastingFailed
         case jsonEncodingFailed(error: Error)
         case propertyListEncodingFailed(error: Error)
     }
@@ -42,38 +41,17 @@ public enum HTTPError: Error {
         case bodyPartFileSizeNotAvailable(at: URL)
         case bodyPartFileSizeQueryFailedWithError(forURL: URL, error: Error)
         case bodyPartInputStreamCreationFailed(for: URL)
-
         case outputStreamCreationFailed(for: URL)
         case outputStreamFileAlreadyExists(at: URL)
         case outputStreamURLInvalid(url: URL)
         case outputStreamWriteFailed(error: Error)
-
         case inputStreamReadFailed(error: Error)
     }
 
-    public enum ResponseValidationFailureReason {
-        case dataFileNil
-        case dataFileReadFailed(at: URL)
-        case missingContentType(acceptableContentTypes: [String])
-        case unacceptableContentType(acceptableContentTypes: [String], responseContentType: String)
-        case unacceptableStatusCode(code: Int)
-    }
-
-    public enum ResponseSerializationFailureReason {
-        case inputDataNil
-        case inputDataNilOrZeroLength
-        case inputFileNil
-        case inputFileReadFailed(at: URL)
-        case stringSerializationFailed(encoding: String.Encoding)
-        case jsonSerializationFailed(error: Error)
-        case propertyListSerializationFailed(error: Error)
-    }
-
     case invalidURL(url: URLConvertible)
+    case invalidResponse(response: URLResponseConvertible)
     case parameterEncodingFailed(reason: ParameterEncodingFailureReason)
     case multipartEncodingFailed(reason: MultipartEncodingFailureReason)
-    case responseValidationFailed(reason: ResponseValidationFailureReason)
-    case responseSerializationFailed(reason: ResponseSerializationFailureReason)
 }
 
 struct AdaptError: Error {
@@ -98,16 +76,6 @@ extension HTTPError {
 
     public var isMultipartEncodingError: Bool {
         if case .multipartEncodingFailed = self { return true }
-        return false
-    }
-
-    public var isResponseValidationError: Bool {
-        if case .responseValidationFailed = self { return true }
-        return false
-    }
-
-    public var isResponseSerializationError: Bool {
-        if case .responseSerializationFailed = self { return true }
         return false
     }
 }
@@ -138,55 +106,6 @@ extension HTTPError {
             return reason.underlyingError
         case .multipartEncodingFailed(let reason):
             return reason.underlyingError
-        case .responseSerializationFailed(let reason):
-            return reason.underlyingError
-        default:
-            return nil
-        }
-    }
-
-    public var acceptableContentTypes: [String]? {
-        switch self {
-        case .responseValidationFailed(let reason):
-            return reason.acceptableContentTypes
-        default:
-            return nil
-        }
-    }
-
-    public var responseContentType: String? {
-        switch self {
-        case .responseValidationFailed(let reason):
-            return reason.responseContentType
-        default:
-            return nil
-        }
-    }
-
-    public var responseCode: Int? {
-        switch self {
-        case .responseValidationFailed(let reason):
-            return reason.responseCode
-        default:
-            return nil
-        }
-    }
-
-    public var failedStringEncoding: String.Encoding? {
-        switch self {
-        case .responseSerializationFailed(let reason):
-            return reason.failedStringEncoding
-        default:
-            return nil
-        }
-    }
-}
-
-extension HTTPError.ParameterEncodingFailureReason {
-    var underlyingError: Error? {
-        switch self {
-        case .jsonEncodingFailed(let error), .propertyListEncodingFailed(let error):
-            return error
         default:
             return nil
         }
@@ -218,48 +137,10 @@ extension HTTPError.MultipartEncodingFailureReason {
     }
 }
 
-extension HTTPError.ResponseValidationFailureReason {
-    var acceptableContentTypes: [String]? {
-        switch self {
-        case .missingContentType(let types), .unacceptableContentType(let types, _):
-            return types
-        default:
-            return nil
-        }
-    }
-
-    var responseContentType: String? {
-        switch self {
-        case .unacceptableContentType(_, let responseType):
-            return responseType
-        default:
-            return nil
-        }
-    }
-
-    var responseCode: Int? {
-        switch self {
-        case .unacceptableStatusCode(let code):
-            return code
-        default:
-            return nil
-        }
-    }
-}
-
-extension HTTPError.ResponseSerializationFailureReason {
-    var failedStringEncoding: String.Encoding? {
-        switch self {
-        case .stringSerializationFailed(let encoding):
-            return encoding
-        default:
-            return nil
-        }
-    }
-
+extension HTTPError.ParameterEncodingFailureReason {
     var underlyingError: Error? {
         switch self {
-        case .jsonSerializationFailed(let error), .propertyListSerializationFailed(let error):
+        case .jsonEncodingFailed(let error):
             return error
         default:
             return nil
@@ -276,10 +157,8 @@ extension HTTPError: LocalizedError {
             return reason.localizedDescription
         case .multipartEncodingFailed(let reason):
             return reason.localizedDescription
-        case .responseValidationFailed(let reason):
-            return reason.localizedDescription
-        case .responseSerializationFailed(let reason):
-            return reason.localizedDescription
+        case .invalidResponse(let response):
+          return "Invalid response: \(response)"
         }
     }
 }
@@ -289,8 +168,6 @@ extension HTTPError.ParameterEncodingFailureReason {
         switch self {
         case .missingURL:
             return "URL request to encode was missing a URL"
-        case .optionalDictionaryCastingFailed:
-            return "Casting to [String: Any] type failed"
         case .jsonEncodingFailed(let error):
             return "JSON could not be encoded because of error:\n\(error.localizedDescription)"
         case .propertyListEncodingFailed(let error):
@@ -334,50 +211,6 @@ extension HTTPError.MultipartEncodingFailureReason {
             return "OutputStream write failed with error: \(error)"
         case .inputStreamReadFailed(let error):
             return "InputStream read failed with error: \(error)"
-        }
-    }
-}
-
-extension HTTPError.ResponseSerializationFailureReason {
-    var localizedDescription: String {
-        switch self {
-        case .inputDataNil:
-            return "Response could not be serialized, input data was nil."
-        case .inputDataNilOrZeroLength:
-            return "Response could not be serialized, input data was nil or zero length."
-        case .inputFileNil:
-            return "Response could not be serialized, input file was nil."
-        case .inputFileReadFailed(let url):
-            return "Response could not be serialized, input file could not be read: \(url)."
-        case .stringSerializationFailed(let encoding):
-            return "String could not be serialized with encoding: \(encoding)."
-        case .jsonSerializationFailed(let error):
-            return "JSON could not be serialized because of error:\n\(error.localizedDescription)"
-        case .propertyListSerializationFailed(let error):
-            return "PropertyList could not be serialized because of error:\n\(error.localizedDescription)"
-        }
-    }
-}
-
-extension HTTPError.ResponseValidationFailureReason {
-    var localizedDescription: String {
-        switch self {
-        case .dataFileNil:
-            return "Response could not be validated, data file was nil."
-        case .dataFileReadFailed(let url):
-            return "Response could not be validated, data file could not be read: \(url)."
-        case .missingContentType(let types):
-            return (
-                "Response Content-Type was missing and acceptable content types " +
-                "(\(types.joined(separator: ","))) do not match \"*/*\"."
-            )
-        case .unacceptableContentType(let acceptableTypes, let responseType):
-            return (
-                "Response Content-Type \"\(responseType)\" does not match any acceptable types: " +
-                "\(acceptableTypes.joined(separator: ","))."
-            )
-        case .unacceptableStatusCode(let code):
-            return "Response status code was unacceptable: \(code)."
         }
     }
 }
