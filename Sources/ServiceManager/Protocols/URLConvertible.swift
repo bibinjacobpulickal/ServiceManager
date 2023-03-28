@@ -26,12 +26,18 @@ import Foundation
 
 /// Types adopting the `URLConvertible` protocol can be used to construct `URL`s, which can then be used to construct
 /// `URLRequests`.
-public protocol URLConvertible {
+public protocol URLConvertible: URLRequestConvertible {
     /// Returns a `URL` from the conforming instance or throws.
     ///
     /// - Returns: The `URL` created from the instance.
     /// - Throws:  Any error thrown while creating the `URL`.
     func asURL() throws -> URL
+}
+
+extension URLConvertible {
+    public func asURLRequest() throws -> URLRequest {
+        URLRequest(url: try asURL())
+    }
 }
 
 extension String: URLConvertible {
