@@ -34,3 +34,25 @@ public extension ResponseComponent {
 
     var decoder: AnyDecoder { JSONDecoder() }
 }
+
+public protocol URLResponseConvertible {
+  func asURLResponse() throws -> URLResponse
+}
+
+extension URLResponse: URLResponseConvertible {
+  public func asURLResponse() throws -> URLResponse { self }
+}
+
+public protocol HTTPURLResponseConvertible {
+  func asHTTPURLResponse() throws -> HTTPURLResponse
+}
+
+extension URLResponse: HTTPURLResponseConvertible {
+  public func asHTTPURLResponse() throws -> HTTPURLResponse {
+    if let this = self as? HTTPURLResponse {
+      return this
+    } else {
+      throw HTTPError.invalidResponse(response: self)
+    }
+  }
+}
